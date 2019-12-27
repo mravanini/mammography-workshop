@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'SageMaker Workshop - CloudFormation Template'
+
+Resources:
+  PublicBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub 'sg-tko-workshop-public-${AWS::AccountId}'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      WebsiteConfiguration:
+        IndexDocument: index.html
+
+  PublicBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties: 
+      Bucket: !Ref PublicBucket
+      PolicyDocument: 
+        Statement: 
+          - 
+            Action: 
+              - "s3:GetObject"
+            Effect: "Allow"
+            Resource: 
+              Fn::Join: 
+                - ""
+                - 
+                  - "arn:aws:s3:::"
+                  - 
+                    Ref: "PublicBucket"
+                  - "/*"
+            Principal: "*"
+  
+  PrivateBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub 'sg-tko-workshop-private-${AWS::AccountId}'
+  
+  CognitoRole:
+  
+  CognitoIdentity:
+
+  LambdaRole:
+  
+  LambdaInvokeClassifier:
+  
+  LambdaResizeImage:
+
+Outputs:
+  PublicWebSite:
+      Description: Public website hosted on S3.
+      Value: !Ref PublicBucket
+
+  CognitoCredential:
+      Description: Cognito credential to call Lambda f
+      unctions.
+      Value: !Ref CognitoIdentity
