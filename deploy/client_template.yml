@@ -38,23 +38,8 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       BucketName: !Sub 'sg-tko-workshop-private-${AWS::AccountId}'
-  
-  CognitoRole:
-  
-  CognitoIdentity:
-
-  LambdaRole:
-  
-  LambdaInvokeClassifier:
-  
-  LambdaResizeImage:
 
 Outputs:
   PublicWebSite:
       Description: Public website hosted on S3.
-      Value: !Ref PublicBucket
-
-  CognitoCredential:
-      Description: Cognito credential to call Lambda f
-      unctions.
-      Value: !Ref CognitoIdentity
+      Value: !GetAtt PublicBucket.WebsiteURL
