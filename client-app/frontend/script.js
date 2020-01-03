@@ -1,5 +1,10 @@
 
 $(document).ready(function () {
+    AWS.config.region = REGION;
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: COGNITO_ID,
+    });
+
     var viewModel = {};
     viewModel.fileData = ko.observable({
         dataURL: ko.observable(),
@@ -28,8 +33,8 @@ $(document).ready(function () {
 
         var file = files[0];
         var name = "raw/" + file.name;
-        var bucketName = "mammographyupload"
-        lambda = new AWS.Lambda({ region: 'us-east-1', apiVersion: '2015-03-31' });
+        var bucketName = PRIVATE_BUCKET
+        lambda = new AWS.Lambda({ region: REGION, apiVersion: '2015-03-31' });
 
         var upload = new AWS.S3.ManagedUpload({
             params: {
