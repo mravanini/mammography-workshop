@@ -1,9 +1,14 @@
 # Amazon SageMaker Mammography Workshop
 
-The purpose of this workshop is show how to use... Under construction...
+The purpose of this workshop is show how to use...
 
 Below we have the architecture of this demo:
 
+**SageMaker Training**
+
+_architecture image here_
+
+**Client application**
 ![demo](images/architecture.jpg)
 
 To get started you will need an IAM user with the following access:
@@ -15,40 +20,53 @@ To get started you will need an IAM user with the following access:
 - SageMaker
 
 __Notes:__
-* _Before start, clone or download the repository_
+* _Clone or download the repository before start_
+    ```
+    git clone https://github.com/gabrielmartinigit/melissa_workshop.git
+    ```
 * _Tested in the N. Virginia region (us-east-1)._
 
-## Development Environment (optional)
-1. Open the Cloud9 console at https://console.aws.amazon.com/cloud9
-2. On the Step 1 - Name environment: Enter the Environment name as **'sagemaker-mammography-workshop'**
-3. On the Step 2 - Configure settings: Just click on **Next** button
-4. On the Step 3 - Review: Check the resources being created, and click on **Create Environment** button 
-5. Once your envionment was provisioned, select the **bash** tab and execute the following commands:
-```
-git clone ...
-```
+## CloudFormation
+1. Open the CloudFormation console at https://console.aws.amazon.com/cloudformation
+2. On the Welcome page, click on **Create stack** button
+3. On the Step 1 - Specify template: Choose Upload a template file, click on **Choose file** button and select the **sagemaker_stemplate.yaml** located inside deploy directory
+4. On the Step 2 - Specify stack details: Enter the Stack name as **sagemaker-mammography-workshop**
+5. On the Step 3 - Configure stack options: Just click on **Next** button
+6. On the Step 4 - Review: Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
+7. Wait for the stack get into status **CREATE_COMPLETE**
 
-## Amazon SageMaker ...
-Under construction...
+## Amazon SageMaker
+1. Open the SageMaker console at https://console.aws.amazon.com/sagemaker
+2. Open the new notebook created
+3. Click on **New** and **Terminal**. Paste the code below and close the Terminal tab:
+    ```
+    cd SageMaker
+    git clone https://github.com/gabrielmartinigit/melissa_workshop.git
+    ```
+4. Go to workshop folder and open sagemaker folder to find the workshop's notebook
+5. _workshop steps here_
 
-## Deploying Client and testing
-1. Run deploy script with create function
-```
-cd deploy
-./deploy.sh create
-```
-2. Copy the Client URL from the script output
-3. Open the URL in a browser
-4. Upload an image
-5. Under construction...
-**(Deixar as funções lambda dentro do template ou colocar como step do workshop para que o pessoal consiga ver o código que chama o sagemaker endpoint e como você fez o resize?)**
+## Deploying Client and Testing
+1. Click on **New** and **Terminal**. Copy and paste the code below:
+    ```
+    cd SageMaker/melissa_workshop/deploy
+    ```
+2. Run deploy script with create function
+    ```
+    ./deploy.sh create <your_sagemaker_inference_endpoint_name>
+    ```
+3. Copy the Client URL from the script output
+4. Open the URL in a browser, upload an image and see the results!
 
-## Clean up
-1. Run deploy script with delete function
-```
-cd deploy
-./deploy.sh delete
-```
+## Clean Up
+* Deleting client app
+    1. In the notebook Termina, run deploy script with delete function
+    ```
+    cd deploy
+    ./deploy.sh delete
+    ```
+* Deleting SageMaker notebook
+    1. Go to CloudFormation and delete **sagemaker-mammography-workshop** stack
 
 ## Reference Links
 * AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
