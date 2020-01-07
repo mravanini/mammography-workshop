@@ -19,15 +19,15 @@ def get_description(best_prediction_position, prediction):
     chance = f'{prediction[best_prediction_position]*100:.2f}'
 
     if(best_prediction_position == NAO):
-        return "Há " + chance + "% de chance de não ser uma mamografia"
+        return "Chance of " + chance + "% of not being mammography"
     elif(best_prediction_position == CCD):
-        return "Há " + chance + "% de chance de ser uma Crânio caudal direita (CCD)"
+        return "Chance of " + chance + "% of being a Cranial-Caudal Right (CC-Right)"
     elif(best_prediction_position == CCE):
-        return "Há " + chance + "% de chance de ser uma Crânio caudal esquerda (CCE)"
+        return "Chance of " + chance + "% of being a Cranial-Caudal Left (CC-Left)"
     elif(best_prediction_position == MLOD):
-        return "Há " + chance + "% de chance de ser uma Médio lateral obliqua direita (MLOD)"
+        return "Chance of " + chance + "% of being a Mediolateral-Oblique Right (MLO-Right)"
     elif(best_prediction_position == MLOE):
-        return "Há " + chance + "% de chance de ser uma Médio lateral obliqua esquerda (MLOE)"
+        return "Chance of " + chance + "% of being a Mediolateral-Oblique Left (MLO-Left)"
 
 
 def get_object(bucket_name, object_name):

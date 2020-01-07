@@ -13,7 +13,7 @@ $(document).ready(function () {
         dataURLArray: ko.observableArray(),
     });
     viewModel.onClear = function (fileData) {
-        if (confirm('Tem certeza?')) {
+        if (confirm('Are you sure?')) {
             fileData.clear && fileData.clear();
             $(".result").empty();
         }
@@ -27,7 +27,7 @@ $(document).ready(function () {
 
         var files = document.getElementById("img").files;
         if (!files.length) {
-            return alert("Selecione um arquivo");
+            return alert("Select a file");
         }
 
 
@@ -75,7 +75,7 @@ $(document).ready(function () {
             },
 
             function (err) {
-                return alert("erro: " + err);
+                return alert("Error: " + err);
             }
 
         );

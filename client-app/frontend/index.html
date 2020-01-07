@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Classificacao de Mamografia</title>
+  <title>Mammography Classification</title>
 <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
 <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
 <link rel='stylesheet' href='cdn.css'>
@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="img-container">
-        <p>Classificação<br> de Mamografia</p>
+        <p>Mammography<br> Classification</p>
     </div>
    <div class="container">
 	<div class="row">
@@ -20,7 +20,7 @@
                 <div class="col-md-6">
                     <img style="height: 125px;" class="img-rounded  thumb" data-bind="attr: { src: fileData().dataURL }, visible: fileData().dataURL">
                     <div data-bind="ifnot: fileData().dataURL">
-                        <label class="drag-label">Arraste a imagem aqui</label>
+                        <label class="drag-label">Drag image here</label>
                     </div>
                 </div>
                 <form enctype='multipart/form-data'>
@@ -34,7 +34,7 @@
                         }" accept="image/*">
                     </div>
                     <div>
-                        <input id="submit" type="submit" value="Enviar">
+                        <input id="submit" type="submit" value="Submit">
                     </div>
                 </form>
             </div>
@@ -44,7 +44,7 @@
 
     <div class="container">
       <div class="row">
-            <div class="col-md-12"><p class="text_result">Resultado</p><div class="result"></div></div>
+            <div class="col-md-12"><p class="text_result">Result</p><div class="result"></div></div>
 
       </div>  
     </div>
