@@ -1,0 +1,6 @@
+{"source-ref":"s3://mammography-images-for-labeling/ccd_1.png","mammography-views":1,"mammography-views-metadata":{"confidence":0.77,"job-name":"labeling-job/mammography-views","class-name":"CCR","human-annotated":"yes","creation-date":"2020-01-07T18:09:52.624174","type":"groundtruth/image-classification"}}
+
+{"source-ref":"s3://mammography-images-for-labeling/mlod_1.png","mammography-views":3,"mammography-views-metadata":{"confidence":0.76,"job-name":"labeling-job/mammography-views","class-name":"MLOR","human-annotated":"yes","creation-date":"2020-01-07T18:08:39.586251","type":"groundtruth/image-classification"}}
+
+{"source-ref":"s3://mammography-images-for-labeling/none_1.png","mammography-views":4,"mammography-views-metadata":{"confidence":0.66,"job-name":"labeling-job/mammography-views","class-name":"INVALID","human-annotated":"yes","creation-date":"2020-01-07T18:07:24.500252","type":"groundtruth/image-classification"}}
+
