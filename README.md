@@ -18,9 +18,9 @@ To get started you will need an IAM user with the following access:
 
 Let's first clone the git repository with all the necessary files for this workshop:
 
-    ```
+    
     git clone https://github.com/gabrielmartinigit/melissa_workshop.git
-    ```
+    
 * _Tested in the N. Virginia region (us-east-1)._
 
 ***
@@ -67,7 +67,7 @@ In order for us to do that, we will need to open the Jupyter Notebook created in
 
 4. Browse through your files to go to workshop folder you cloned in the step 1 
 5. Open **sagemaker** folder to find the workshop's notebook (.ipynb file)
- 
+6. Now follow the instructions described in the notebook (.ipynb file) 
 
 ## 6 - Front end
 
@@ -93,12 +93,19 @@ The client application architecture is depicted below:
 
 4. Copy the last successful endpoint-name. It will look like this: 'image-classification-2020-01-13-09-58-43-599'
 
-5. Run the deploy script with **create** parameter. Replace the <<endpoint_name>> below by the endpoint copied in step 4.
+5. Run the deploy script. Replace the <<endpoint_name>> below by the endpoint copied in step 4.
     ```
     ./deploy.sh create <endpoint_name>
     ```
 3. Copy the Client URL from the script output
 4. Open the URL in a browser, upload a mammography image and see the results!
+Download a sample mammography image here: 
+
+* CC-Right: https://mammography-workshop.s3.amazonaws.com/sample/resize_CCD_564.jpg
+* CC-Left: https://mammography-workshop.s3.amazonaws.com/sample/resize_CCE_599.jpg
+* MLO-Right: https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOD_682.jpg
+* MLO-Left: https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOE_743.jpg
+* Not a mammography: https://mammography-workshop.s3.amazonaws.com/sample/resize_NAO_MG_1.3.51.0.7.2949628217.25582.6989.45324.14121.15364.52196.dcm.jpg
 
 ## Clean Up
 * Deleting client app
