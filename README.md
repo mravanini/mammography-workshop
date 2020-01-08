@@ -13,6 +13,7 @@ To get started you will need an IAM user with the following access:
 - Cognito
 - Lambda
 - SageMaker
+- StepFunctions
 
 ## 1 - Cloning Git Repository
 
