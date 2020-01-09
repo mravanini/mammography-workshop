@@ -66,6 +66,3 @@ def lambda_handler(event, context):
     return {
         'message': 'OK'
     }
-
-#remove this last line when deploying to lambda...    
-lambda_handler(None, None)    
