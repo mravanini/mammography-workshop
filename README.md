@@ -76,7 +76,7 @@ While you wait for the template to be deployed, let's learn from our instructors
 
 ## 4 - Ground Truth
 
-Let's navigate to the [Ground Truth lab](#groundtruth#sagemaker-ground-truth).
+Let's navigate to the [Ground Truth lab](#/groundtruth#sagemaker-ground-truth).
 
 ## 5 - Training, testing, and deploying the Mammography Classification model
 
@@ -136,7 +136,7 @@ Download a sample mammography image here:
 
 ## 7 - Step Functions
 
-Let's navigate to the [Step Functions lab](#workflow#ml-workflow).
+Let's navigate to the [Step Functions lab](#/workflow#ml-workflow).
 
 
 ## 8 - Clean Up
