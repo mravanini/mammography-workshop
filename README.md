@@ -1,5 +1,16 @@
 # Amazon SageMaker Mammography Workshop
 
+[1 - Cloning Git Repository](#1---cloning-git-repository)
+[2 - Creating the SageMaker Jupyter Notebook](#2---creating-the-sagemaker-jupyter-notebook)
+[3 - Presentation](#3---presentation)
+[4 - Ground Truth](#4---ground-truth)
+[5 - Training, testing, and deploying the Mammography Classification model](#5---training-testing-and-deploying-the-mammography-classification-model)
+[6 - Front end](#6---front-end)
+[7 - Step Functions](#7---step-functions)
+[8 - Clean Up](#8---clean-up)
+[9 - Reference Links](#9---reference-links)
+
+
 Today we will learn how to classify mammography images into 5 different categories using Amazon SageMaker, Amazon GroundTruth, AWS StepFunctions, AWS Lambda, and much more!
 
 You will need to use your own AWS account for this workshop, and all information will be provided through this documentation.
@@ -15,6 +26,9 @@ To get started you will need an IAM user with the following access:
 - SageMaker
 - StepFunctions
 
+*Pre-requirements:*
+- Service limit of 1 GPU instance type (p2, p3, etc.)
+
 ## 1 - Cloning Git Repository
 
 Let's first clone the git repository with all the necessary files for this workshop:
@@ -23,6 +37,9 @@ Let's first clone the git repository with all the necessary files for this works
     git clone https://github.com/gabrielmartinigit/melissa_workshop.git
     
 * _Tested in the N. Virginia region (us-east-1)._
+
+If you don't have Git installed in your machine, no problem. Just navigate to the **deploy** folder of this workshop and download the file **sagemaker_template.yml**.
+You will need this file on the next step. 
 
 ***
 
@@ -35,23 +52,23 @@ If you have one already, you **may skip this part**.
 If not, we will deploy one using a CloudFormation template: 
 
 **CloudFormation**
-1. Open the CloudFormation console at https://console.aws.amazon.com/cloudformation
+1. Open the CloudFormation console **in a new tab** at https://console.aws.amazon.com/cloudformation
 2. On the Welcome page, click on **Create stack** button
-3. On the Step 1 - Specify template: Choose Upload a template file, click on **Choose file** button and select the **sagemaker_stemplate.yaml** located inside the **deploy** folder
-4. On the Step 2 - Specify stack details: Enter the Stack name as **sagemaker-mammography-workshop**
-5. On the Step 3 - Configure stack options: Just click on **Next** button
-6. On the Step 4 - Review: Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
+3. On the "Step 1 - Specify template": Choose Upload a template file, click on **Choose file** button and select the **sagemaker_template.yaml** located inside the **deploy** folder
+4. On the "Step 2 - Specify stack details": Enter the Stack name as **sagemaker-mammography-workshop**
+5. On the "Step 3 - Configure stack options": Just click on **Next** button
+6. On the "Step 4 - Review": Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
 7. Wait for the stack to get into status **CREATE_COMPLETE**
 
 
 ## 3 - Presentation
 
-While you wait, let's learn from our instructors the motivation behind this workshop and what we plan to deliver today.
+While you wait for the template to be deployed, let's learn from our instructors the motivation behind this workshop and what we plan to deliver today.
 
 
 ## 4 - Ground Truth
 
-Let's navigate to the Ground Truth lab.
+Let's navigate to the [Ground Truth lab](#groundtruth/README.md).
 
 ## 5 - Training, testing, and deploying the Mammography Classification model
 
@@ -108,7 +125,13 @@ Download a sample mammography image here:
 * MLO-Left: https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOE_743.jpg
 * Not a mammography: https://mammography-workshop.s3.amazonaws.com/sample/resize_NAO_MG_1.3.51.0.7.2949628217.25582.6989.45324.14121.15364.52196.dcm.jpg
 
-## Clean Up
+
+## 7 - Step Functions
+
+Let's navigate to the [Step Functions lab](#workflow/README.md).
+
+
+## 8 - Clean Up
 * Deleting client app
     1. In the notebook Terminal, run deploy script with delete function
     ```
@@ -118,7 +141,7 @@ Download a sample mammography image here:
 * Deleting SageMaker notebook
     1. Go to CloudFormation and delete **sagemaker-mammography-workshop** stack
 
-## Reference Links
+## 9 - Reference Links
 * AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
 * Python boto3: https://boto3.amazonaws.com/v1/documentation/api/latest/index.html?id=docs_gateway
 * SageMaker: https://docs.aws.amazon.com/sagemaker/latest/dg/gs.html
