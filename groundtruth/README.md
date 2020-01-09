@@ -143,7 +143,12 @@ The state **In Progress** indicates that you job is active, waiting for your lab
 
 ## Step 3: Classifying the images
 
-It is time to classify! The team's members will see, after some minutes, that there is a new job on their console:
+It is time to classify!
+ 
+Go back to the page you received by e-mail when you created the Labeling Workforce.
+ 
+It might take some minutes in order for the Labeling Job to appear. Keep refreshing the page until it does.
+
 
 ![Image](./images/newjobavailable.png)
 
@@ -151,7 +156,7 @@ Click on **Start working**. Some images will be presented and you need to choose
 
 ![Image](./images/realsc1.png)
 
-Invalid images will also appear:
+Non-mammography images will also appear:
 
 ![Image](./images/realsc2.png)
 
