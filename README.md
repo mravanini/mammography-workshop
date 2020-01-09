@@ -150,6 +150,9 @@ Let's navigate to the [Step Functions lab](workflow#ml-workflow).
     ```
 * Deleting SageMaker notebook
     1. Go to CloudFormation and delete **sagemaker-mammography-workshop** stack
+    
+* Deleting the SageMaker endpoint
+    1. Go to the SageMaker console, navigate to the endpoint. Delete the endpoint created during the lab.
 
 ## 9 - Reference Links
 * AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
