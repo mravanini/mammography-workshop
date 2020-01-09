@@ -170,7 +170,7 @@ The job status will change to **complete** in SageMaker Ground Truth console:
 
 ## Results: The output JSON
 
-The output folder was set to **s3://mammography-images-for-labeling/output/**. After the classification, new folders were created, and inside **<job_name>/manifests/output/** there is a file named **output.manifest**. Download it and let's analyze its lines.
+The output folder was set to **s3://output-bucket-mammography-workshop-123456789012/output/**. After the classification, new folders were created, and inside **<job_name>/manifests/output/** there is a file named **output.manifest**. Download it and let's analyze its lines.
 
 ```json
 {"source-ref":"s3://mammography-images-for-labeling/ccd_1.png","mammography-views":1,"mammography-views-metadata":{"confidence":0.77,"job-name":"labeling-job/mammography-views","class-name":"CCR","human-annotated":"yes","creation-date":"2020-01-07T18:09:52.624174","type":"groundtruth/image-classification"}}
@@ -181,8 +181,10 @@ The output folder was set to **s3://mammography-images-for-labeling/output/**. A
 
 ```
 
-Each line contains a classified image, with its address in S3, its label and other useful information.
+Each line refers to a classified image. It shows the image's relative address in S3, its label and other useful information.
 
 ## Final considerations
 
-The generated file can be used in SageMaker, but you can also consume it in Python notebooks (imported as a simple JSON file) and many other solutions. Let's check in the next labs.
+The generated file can be used in SageMaker, but you can also consume it in Python notebooks (imported as a simple JSON file) and many other solutions. 
+
+Since some of us are not real doctors, our evaluation might harm our model, so we will not use this manifest during our training, but we will explain how to use it later on in this lab.
