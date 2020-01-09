@@ -36,6 +36,7 @@ To get started you will need an IAM user with the following access:
 
 *Pre-requirements:*
 - Service limit of 1 GPU instance type (p2, p3, etc.)
+- 
 
 ## 1 - Cloning Git Repository
 
