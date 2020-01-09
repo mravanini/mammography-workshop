@@ -35,7 +35,17 @@ Resources:
     Type: "AWS::S3::Bucket"
     Properties:
       BucketName: !Sub "sg-tko-workshop-private-${AWS::AccountId}"
-
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders: ['*']
+            AllowedOrigins: ['*']
+            AllowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
+            Id: myCORSRuleId1
   CognitoIdentityPoolId:
     Type: "AWS::Cognito::IdentityPool"
     Properties:
