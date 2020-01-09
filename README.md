@@ -43,8 +43,6 @@ To get started you will need an IAM user with the following access:
 Let's first clone the git repository with all the necessary files for this workshop:
 
     
-    cd SageMaker
-    
     git clone https://github.com/gabrielmartinigit/melissa_workshop.git
     
 * _Tested in the N. Virginia region (us-east-1)._

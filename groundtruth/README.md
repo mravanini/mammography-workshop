@@ -121,7 +121,9 @@ In the task type, select **Image Classification**:
 
 ![Image](./images/classification.png)
 
-Click next. In **Workers**, select **Private**, and find our team in **Private Teams**:
+Click **Next**. 
+
+In **Workers**, select **Private**, and find our team in **Private Teams**:
 
 ![Image](./images/team_select.png)
 
