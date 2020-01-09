@@ -35,13 +35,13 @@
         defaultOptions: {
             wrapperClass: 'input-group',
             fileNameClass: 'disabled form-control',
-            noFileText: 'Nenhuma imagem selecionada',
+            noFileText: 'No image selected',
             buttonGroupClass: 'input-group-btn',
             buttonClass: 'btn btn-primary',
             clearButtonClass: 'btn btn-default',
-            buttonText: 'Selecione a imagem',
+            buttonText: 'Select the image',
             changeButtonText: 'Trocar',
-            clearButtonText: 'Remover imagem',
+            clearButtonText: 'Remove image',
             fileName: true,
             clearButton: true,
             onClear: function(fileData, options) {

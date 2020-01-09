@@ -36,7 +36,7 @@ To get started you will need an IAM user with the following access:
 
 *Pre-requirements:*
 - Service limit of 1 GPU instance type (p2, p3, etc.)
-- 
+- Service limit to create 2 more buckets
 
 ## 1 - Cloning Git Repository
 
@@ -117,7 +117,7 @@ The client application architecture is depicted below:
     cd melissa_workshop/deploy
     ```
 3. Open a new tab in your browser and navigate to:
-    https://console.aws.amazon.com/sagemaker/home#/jobs
+    https://console.aws.amazon.com/sagemaker/home#/endpoints
 
 4. Copy the last successful endpoint-name. It will look like this: 'image-classification-2020-01-13-09-58-43-599'
 
