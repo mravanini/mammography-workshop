@@ -29,6 +29,11 @@ Resources:
     Properties:
       InstanceType: "ml.t2.large"
       RoleArn: !GetAtt NotebookRole.Arn
+      
+  OutputBucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: !Sub "output-bucket-mammography-workshop-${AWS::AccountId}"
 
 Outputs:
   Instance:
@@ -37,3 +42,6 @@ Outputs:
   Role:
     Description: SageMaker Notebook Instance Role.
     Value: !GetAtt NotebookRole.Arn
+  OutputBucket:
+    Description: Bucket for SageMaker model output files.
+    Value: !Ref OutputBucket
