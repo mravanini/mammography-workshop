@@ -1,13 +1,21 @@
 # Amazon SageMaker Mammography Workshop
 
 [1 - Cloning Git Repository](#1---cloning-git-repository)
+
 [2 - Creating the SageMaker Jupyter Notebook](#2---creating-the-sagemaker-jupyter-notebook)
+
 [3 - Presentation](#3---presentation)
+
 [4 - Ground Truth](#4---ground-truth)
+
 [5 - Training, testing, and deploying the Mammography Classification model](#5---training-testing-and-deploying-the-mammography-classification-model)
+
 [6 - Front end](#6---front-end)
+
 [7 - Step Functions](#7---step-functions)
+
 [8 - Clean Up](#8---clean-up)
+
 [9 - Reference Links](#9---reference-links)
 
 
@@ -68,7 +76,7 @@ While you wait for the template to be deployed, let's learn from our instructors
 
 ## 4 - Ground Truth
 
-Let's navigate to the [Ground Truth lab](#groundtruth/README.md).
+Let's navigate to the [Ground Truth lab](#groundtruth#sagemaker-ground-truth).
 
 ## 5 - Training, testing, and deploying the Mammography Classification model
 
@@ -128,7 +136,7 @@ Download a sample mammography image here:
 
 ## 7 - Step Functions
 
-Let's navigate to the [Step Functions lab](#workflow/README.md).
+Let's navigate to the [Step Functions lab](#workflow#ml-workflow).
 
 
 ## 8 - Clean Up
