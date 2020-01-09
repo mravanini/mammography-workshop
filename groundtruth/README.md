@@ -188,3 +188,5 @@ Each line refers to a classified image. It shows the image's relative address in
 The generated file can be used in SageMaker, but you can also consume it in Python notebooks (imported as a simple JSON file) and many other solutions. 
 
 Since some of us are not real doctors, our evaluation might harm our model, so we will not use this manifest during our training, but we will explain how to use it later on in this lab.
+
+Let's go back to the lab by clicking [here](/../../)
