@@ -31,7 +31,7 @@
               "S3DataSource": {
                 "S3DataDistributionType": "FullyReplicated",
                 "S3DataType": "S3Prefix",
-                "S3Uri": "s3://mamografiasaifidi/mammography-images/resize/train/"
+                "S3Uri": "s3://mammography-workshop/resize/train/"
               }
             },
             "ChannelName": "train",
@@ -42,7 +42,7 @@
               "S3DataSource": {
                 "S3DataDistributionType": "FullyReplicated",
                 "S3DataType": "S3Prefix",
-                "S3Uri": "s3://mamografiasaifidi/mammography-images/resize/test/"
+                "S3Uri": "s3://mammography-workshop/resize/test/"
               }
             },
             "ChannelName": "validation",
@@ -53,7 +53,7 @@
               "S3DataSource": {
                 "S3DataDistributionType": "FullyReplicated",
                 "S3DataType": "S3Prefix",
-                "S3Uri": "s3://mamografiasaifidi/mammography-images/resize/train-data.lst"
+                "S3Uri": "s3://mammography-workshop/resize/train-data.lst"
               }
             },
             "ChannelName": "train_lst",
@@ -64,7 +64,7 @@
               "S3DataSource": {
                 "S3DataDistributionType": "FullyReplicated",
                 "S3DataType": "S3Prefix",
-                "S3Uri": "s3://mamografiasaifidi/mammography-images/resize/test-data.lst"
+                "S3Uri": "s3://mammography-workshop/resize/test-data.lst"
               }
             },
             "ChannelName": "validation_lst",
