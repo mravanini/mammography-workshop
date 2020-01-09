@@ -109,11 +109,12 @@ The client application architecture is depicted below:
 
 1. In SageMaker, click on **Git** and then **Open Terminal**. Copy and paste the code below:
     ```
+    cd SageMaker
     git clone https://github.com/gabrielmartinigit/melissa_workshop.git
     ```
 2. Now navigate to the **deploy** folder:
     ```
-    cd SageMaker/melissa_workshop/deploy
+    cd melissa_workshop/deploy
     ```
 3. Open a new tab in your browser and navigate to:
     https://console.aws.amazon.com/sagemaker/home#/jobs
