@@ -84,7 +84,7 @@ Ground Truth expects the data to be classified to be stored in S3, so let's uplo
 All the mammography images you need are in the Git repository you cloned.
 They are inside the folder **groundtruth/mammography/**
 
-**If you did not clone the repository**, there is a **zip file** in the **groundtruth/mammography/zip** directory. You can [download it](/groundtruth/mammography/zip/mammography-to-download.zip) locally for the next step.
+**If you did not clone the repository**, there is a **zip file** in the **groundtruth/zip-mammography/** directory. You can [download it](/groundtruth/zip-mammography/mammography-to-download.zip?raw=true) locally for the next step.
 
 ![Image](./images/explorer.png)
 
