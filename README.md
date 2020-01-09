@@ -61,7 +61,7 @@ If you have one Notebook and one bucket you can work on already, you **may skip 
 If not, we will deploy one using a CloudFormation template: 
 
 **CloudFormation**
-1. Deploy the following CloudFormation template: https://console.aws.amazon.com/cloudformation/home?#/stacks/create/template?stackName=sagemaker-mammography-workshop&templateURL=https://github.com/gabrielmartinigit/melissa_workshop/blob/master/deploy/sagemaker_template.yml
+1. Deploy the following CloudFormation template: https://console.aws.amazon.com/cloudformation/home?#/stacks/create/template?stackName=sagemaker-mammography-workshop&templateURL=https://mammography-workshop.s3.amazonaws.com/cloudformationtemplate/sagemaker_template.yml
 1. Open the CloudFormation console **in a new tab** at https://console.aws.amazon.com/cloudformation
 2. On the Welcome page, click on **Create stack** button
 3. On the "Step 1 - Specify template": Choose Upload a template file, click on **Choose file** button and select the **sagemaker_template.yaml** located inside the **deploy** folder
