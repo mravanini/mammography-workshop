@@ -81,10 +81,8 @@ Ground Truth expects the data to be classified to be stored in S3, so let's uplo
 
 ### Part 1: Uploading the images
 
-All the mammography images you need are in the Git repository you cloned.
-They are inside the folder **groundtruth/mammography/**
-
-**If you did not clone the repository**, there is a **zip file** in the **groundtruth/zip-mammography/** directory. You can [download it](/groundtruth/zip-mammography/mammography-to-download.zip?raw=true) locally for the next step.
+There is a **zip file** that can [be download from here](/groundtruth/zip-mammography/mammography-to-download.zip?raw=true).
+Download it locally and unzip it.
 
 ![Image](./images/explorer.png)
 
@@ -92,7 +90,7 @@ Open the **Amazon S3 Console** and open the bucket whose name begins with **outp
 
 ![Image](./images/bucket.png)
 
-Upload the mammography **images** you want to label, i.e, the ones in the folder **groundtruth/mammography/**:
+Upload the mammography **images** you want to label, i.e, the ones you unzipped in the previous step:
 
 ![Image](./images/upload.png)
 
