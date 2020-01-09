@@ -61,6 +61,7 @@ If you have one Notebook and one bucket you can work on already, you **may skip 
 If not, we will deploy one using a CloudFormation template: 
 
 **CloudFormation**
+1. Deploy the following CloudFormation template: https://console.aws.amazon.com/cloudformation/home?#/stacks/create/template?stackName=sagemaker-mammography-workshop&templateURL=https://github.com/gabrielmartinigit/melissa_workshop/blob/master/deploy/sagemaker_template.yml
 1. Open the CloudFormation console **in a new tab** at https://console.aws.amazon.com/cloudformation
 2. On the Welcome page, click on **Create stack** button
 3. On the "Step 1 - Specify template": Choose Upload a template file, click on **Choose file** button and select the **sagemaker_template.yaml** located inside the **deploy** folder
@@ -83,18 +84,29 @@ Let's navigate to the [Ground Truth lab](groundtruth#sagemaker-ground-truth).
 
 The architecture below represents what we will deploy today:
 
-![demo](images/backend-architecture.png)
+![Backend architecture](images/backend-architecture.png)
 
 In order for us to do that, we will need to open the Jupyter Notebook created in step 1.
 
 1. Open the SageMaker Notebook console at https://console.aws.amazon.com/sagemaker/home#/notebook-instances
 2. Click on **Open JupyterLab**
-3. When the notebook opens, click on the **Upload Files**:
-![upload](images/upload-sign.png) 
+3. In SageMaker, click on **Git** and then **Open Terminal**. Execute the code below in the terminal:
+    ```
+    cd SageMaker
+    git clone https://github.com/gabrielmartinigit/melissa_workshop.git
+   
+    ```
+If successful, you should see a message like this:
 
-4. Browse through your files to go to workshop folder you cloned in the step 1 
-5. Open **sagemaker** folder to find the workshop's notebook (.ipynb file)
-6. Now follow the instructions described in the notebook (.ipynb file) 
+>Receiving objects: 100% (359/359), 61.28 MiB | 26.27 MiB/s, done.
+>Resolving deltas: 100% (109/109), done.
+
+4. In the File Browse, open the notebook with the name mammography-classification.ipynb:
+
+![How to open a notebook](images/open-notebook.png)
+
+
+5. Now follow the instructions described in the notebook.  
 
 ## 6 - Front end
 
@@ -104,14 +116,9 @@ The client application architecture is depicted below:
 
 ![demo](images/architecture.jpg)
 
-* _Note: You can clone the repository in the SageMaker Notebook or you can run it locally in your machine._
 
+1. Go back to the Git terminal you opened previously. 
 
-1. In SageMaker, click on **Git** and then **Open Terminal**. Copy and paste the code below:
-    ```
-    cd SageMaker
-    git clone https://github.com/gabrielmartinigit/melissa_workshop.git
-    ```
 2. Now navigate to the **deploy** folder:
     ```
     cd melissa_workshop/deploy
@@ -123,10 +130,12 @@ The client application architecture is depicted below:
 
 5. Run the deploy script. Replace the <<endpoint_name>> below by the endpoint copied in step 4.
     ```
-    ./deploy.sh create <endpoint_name>
+    ./deploy.sh create <<endpoint_name>>
     ```
-3. Copy the Client URL from the script output
-4. Open the URL in a browser, upload a mammography image and see the results!
+6. Copy the Client URL from the script output.
+It will look something like this: "http://sg-tko-workshop-public-123456789011.s3-website.region.amazonaws.com/"
+
+7. Open the URL in a browser, upload a mammography image and see the results!
 Download a sample mammography image here: 
 
 * CC-Right: https://mammography-workshop.s3.amazonaws.com/sample/resize_CCD_564.jpg
@@ -149,10 +158,10 @@ Let's navigate to the [Step Functions lab](workflow#ml-workflow).
     ./deploy.sh delete
     ```
 * Deleting SageMaker notebook
-    1. Go to CloudFormation and delete **sagemaker-mammography-workshop** stack
+    1. Go to [CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks) and delete **sagemaker-mammography-workshop** stack
     
 * Deleting the SageMaker endpoint
-    1. Go to the SageMaker console, navigate to the endpoint. Delete the endpoint created during the lab.
+    1. Go to the [SageMaker Endpoints console](https://console.aws.amazon.com/sagemaker/home#/endpoints). Delete the endpoint created during the lab.
 
 ## 9 - Reference Links
 * AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html

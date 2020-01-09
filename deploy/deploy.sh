@@ -26,7 +26,7 @@ create() {
 		sleep 3
 		stack_status=$($stack_status_check)
 	done
-	echo "Stack created with success!"
+	echo "Stack created successfully!"
 
 	echo "Uploading frontend..."
     region=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[2].OutputValue)
@@ -58,7 +58,7 @@ EOL
 		sleep 3
 		stack_status=$($stack_status_check)
 	done
-	echo "Stack created with success!"
+	echo "Stack created successfully!"
 
     # Outputs
     client_url=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
