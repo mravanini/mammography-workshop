@@ -54,9 +54,9 @@ You will need this file on the next step.
 
 ## 2 - Creating the SageMaker Jupyter Notebook
 
-Before we can start the workshop, we need to have a SageMaker Jupyter Notebook deployed in your account.
+Before we can start the workshop, we need to have a SageMaker Jupyter Notebook deployed in your account. It will also create a bucket for output files.
 
-If you have one already, you **may skip this part**. 
+If you have one Notebook and one bucket you can work on already, you **may skip this part**. 
 
 If not, we will deploy one using a CloudFormation template: 
 
