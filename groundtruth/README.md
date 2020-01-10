@@ -92,7 +92,7 @@ Open the **Amazon S3 Console** and open the bucket whose name begins with **outp
 
 Upload the mammography **images** you want to label, i.e, the ones you unzipped in the previous step:
 
-![Image](./images/upload.png)
+![Image](./images/upload.png=100x100)
 
 Record this bucket's name for the next part.
 
