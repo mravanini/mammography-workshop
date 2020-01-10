@@ -1,20 +1,20 @@
 # Amazon SageMaker Mammography Workshop
 
-[1 - Creating the SageMaker Jupyter Notebook](#1---creating-the-sagemaker-jupyter-notebook)
+[1 - Creating the SageMaker Jupyter Notebook](#2---creating-the-sagemaker-jupyter-notebook)
 
-[2 - Presentation](#2---presentation)
+[2 - Presentation](#3---presentation)
 
-[3 - Ground Truth](#3---ground-truth)
+[3 - Ground Truth](#4---ground-truth)
 
-[4 - Training, testing, and deploying the Mammography Classification model](#4---training-testing-and-deploying-the-mammography-classification-model)
+[4 - Training, testing, and deploying the Mammography Classification model](#5---training-testing-and-deploying-the-mammography-classification-model)
 
-[5 - Front end](#5---front-end)
+[5 - Front end](#6---front-end)
 
-[6 - Step Functions](#6---step-functions)
+[6 - Step Functions](#7---step-functions)
 
-[7 - Clean Up](#7---clean-up)
+[7 - Clean Up](#8---clean-up)
 
-[8 - Reference Links](#8---reference-links)
+[8 - Reference Links](#9---reference-links)
 
 
 Today we will learn how to classify mammography images into 5 different categories using Amazon SageMaker, Amazon GroundTruth, AWS StepFunctions, AWS Lambda, and much more!
@@ -36,11 +36,6 @@ To get started you will need an IAM user with the following access:
 - Service limit of 1 GPU instance type (p2, p3, etc.)
 - Service limit to create 2 more buckets
 
-*This lab has been tested in the following regions:*
-- N. Virginia (us-east-1)
-- Ohio (us-east-1)
-- Oregon (us-west-2)
-- Ireland (eu-west-1)
 
 ## 1 - Creating the SageMaker Jupyter Notebook
 
@@ -50,6 +45,7 @@ Before we can start the workshop, we need to have a SageMaker Jupyter Notebook d
 1. Deploy the following CloudFormation template: https://console.aws.amazon.com/cloudformation/home?#/stacks/create/template?stackName=sagemaker-mammography-workshop&templateURL=https://mammography-workshop.s3.amazonaws.com/cloudformationtemplate/sagemaker_template.yml
 2. On the "Step 3 - Configure stack options": Just click on **Next** button
 3. On the "Step 4 - Review": Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
+4. Wait for the stack to get into status **CREATE_COMPLETE**
 
 
 ## 2 - Presentation
