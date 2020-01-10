@@ -38,7 +38,7 @@ To get started you will need an IAM user with the following access:
 
 *This lab has been tested in the following regions:*
 - N. Virginia (us-east-1)
-- Ohio (us-east-1)
+- Ohio (us-east-2)
 - Oregon (us-west-2)
 - Ireland (eu-west-1)
 
