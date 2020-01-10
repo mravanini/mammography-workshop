@@ -74,7 +74,7 @@ In order for us to do that, we will need to open the Jupyter Notebook created in
 3. In SageMaker, click on **Git** and then **Open Terminal**. Execute the code below in the terminal:
     ```
     cd SageMaker
-    git clone https://github.com/gabrielmartinigit/melissa_workshop.git
+    git clone https://github.com/gabrielmartinigit/mammography-workshop.git
    
     ```
 If successful, you should see a message like this:
@@ -103,7 +103,7 @@ The client application architecture is depicted below:
 
 2. Now navigate to the **deploy** folder:
     ```
-    cd melissa_workshop/deploy
+    cd mammography-workshop/deploy
     ```
 3. Open a new tab in your browser and navigate to:
     https://console.aws.amazon.com/sagemaker/home#/endpoints
