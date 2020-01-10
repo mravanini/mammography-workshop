@@ -80,6 +80,7 @@ In order for us to do that, we will need to open the Jupyter Notebook created in
 If successful, you should see a message like this:
 
 >Receiving objects: 100% (359/359), 61.28 MiB | 26.27 MiB/s, done.
+>
 >Resolving deltas: 100% (109/109), done.
 
 4. In the File Browse, open the notebook with the name mammography-classification.ipynb:
@@ -114,7 +115,10 @@ The client application architecture is depicted below:
     ./deploy.sh create <<endpoint_name>>
     ```
 6. Copy the Client URL from the script output.
-It will look something like this: "http://sg-tko-workshop-public-123456789011.s3-website.region.amazonaws.com/"
+It will look something like this: 
+```
+http://sg-tko-workshop-public-123456789011.s3-website.region.amazonaws.com/
+```
 
 7. Open the URL in a browser, upload a mammography image and see the results!
 Download a sample mammography image here: 
@@ -138,6 +142,9 @@ Let's navigate to the [Step Functions lab](workflow#ml-workflow).
     cd deploy
     ./deploy.sh delete
     ```
+
+#### !!! If you are an Amazon employee, make sure you delete the front-end. It has a Public Bucket that will escalate a ticket to your manager. 
+
 * Deleting SageMaker notebook
     1. Go to [CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks) and delete **sagemaker-mammography-workshop** stack
     

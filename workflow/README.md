@@ -15,7 +15,7 @@ The workflow steps will look like the figure below:
 
 ![Image](./images/Figure_1.png)
 
-- Generate Dataset: Invokes a lambda function responsible for reading the folder and file structure in S3 and generating a TSV file containing some metadata.
+- Generate Dataset: Invokes a lambda function responsible for reading the folder and file structure in S3 and generating a LST file containing some metadata.
 - Train Model: Creates and runs a training job in SageMaker.
 - Save Model: Saves the model for later use.
 
@@ -47,13 +47,13 @@ Before we can create our workflow, we need to create the Lambda function respons
 
 **Step 6:** The last step to finalize our function is to modify the source code. Download the source code [here](https://raw.githubusercontent.com/gabrielmartinigit/melissa_workshop/master/workflow/code/generate_lst_lambda_template.py) and paste it into the "Function Code" field.
 
-**Step 7:** Now follow the instructions in the source code and modify the name of the buckets. Then save and test the function. Check the function output logs. If it worked correctly, you will see the following message:
+**Step 7:** Now follow the instructions in the source code and modify the name of the buckets. Then save and test the function. Check the function output logs. If successful, you will see the following message:
 
 ![Image](./images/Figure_8.png)
 
 ## Workflow definition using AWS Step Functions
 
-Now that you have your Lambda function ready, you can create your Worklow.
+Now that you have your Lambda function ready, you can create your Workflow.
 
 **Step 8:** Go to the step functions console and create a new State Machine by clicking on "State Machines" / "Create state machine".
 
@@ -69,6 +69,9 @@ Now that you have your Lambda function ready, you can create your Worklow.
 
 Congratulations! You have created your first Machine Learning Workflow. 
 
-**Step 12:** To test it, click "Start execution". The workflow should take about 10 minutes to complete. If everything works, at the end you will see the following image, with all the green steps:
+**Step 12:** To test it, click "Start execution". The workflow should take about 10 minutes to complete. If successful, at the end you will see the following image, with all the steps colored in green:
 
 ![Image](./images/Figure_11.png)
+
+
+Let's go back to the lab by clicking [here](/../../#6---step-functions)
