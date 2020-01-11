@@ -74,7 +74,7 @@ In order for us to do that, we will need to open the Jupyter Notebook created in
 3. In SageMaker, click on **Git** and then **Open Terminal**. Execute the code below in the terminal:
     ```
     cd SageMaker
-    git clone https://github.com/gabrielmartinigit/melissa_workshop.git
+    git clone https://github.com/mravanini/mammography-workshop.git
    
     ```
 If successful, you should see a message like this:
@@ -83,7 +83,7 @@ If successful, you should see a message like this:
 >
 >Resolving deltas: 100% (109/109), done.
 
-4. In the File Browse, open the notebook with the name mammography-classification.ipynb:
+4. In the File Browse on the left, navigate to the folder mammography-workshop/sagemaker. You should see something like the image below. Open the notebook with the name mammography-classification.ipynb:
 
 ![How to open a notebook](images/open-notebook.png)
 
@@ -103,7 +103,7 @@ The client application architecture is depicted below:
 
 2. Now navigate to the **deploy** folder:
     ```
-    cd melissa_workshop/deploy
+    cd mammography-workshop/deploy
     ```
 3. Open a new tab in your browser and navigate to:
     https://console.aws.amazon.com/sagemaker/home#/endpoints
@@ -124,10 +124,10 @@ http://sg-tko-workshop-public-123456789011.s3-website.region.amazonaws.com/
 Download a sample mammography image here: 
 
 * CC-Right: https://mammography-workshop.s3.amazonaws.com/sample/resize_CCD_564.jpg
-* CC-Left: https://mammography-workshop.s3.amazonaws.com/sample/resize_CCE_599.jpg
+* CC-Left: https://mammography-workshop.s3.amazonaws.com/sample/resize_CCE_835.jpg
 * MLO-Right: https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOD_682.jpg
 * MLO-Left: https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOE_743.jpg
-* Not a mammography: https://mammography-workshop.s3.amazonaws.com/sample/resize_NAO_MG_1.3.51.0.7.2949628217.25582.6989.45324.14121.15364.52196.dcm.jpg
+* Not a mammography: https://mammography-workshop.s3.amazonaws.com/sample/resize_NAO_MG_1.3.51.0.7.11929756167.13783.28228.48520.63660.34753.63542.dcm.jpg
 
 
 ## 6 - Step Functions
@@ -146,7 +146,8 @@ Let's navigate to the [Step Functions lab](workflow#ml-workflow).
 #### !!! If you are an Amazon employee, make sure you delete the front-end. It has a Public Bucket that will escalate a ticket to your manager. 
 
 * Deleting SageMaker notebook
-    1. Go to [CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks) and delete **sagemaker-mammography-workshop** stack
+    1. First delete the contents of the output bucket
+    2. Then go to [CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks) and delete **sagemaker-mammography-workshop** stack
     
 * Deleting the SageMaker endpoint
     1. Go to the [SageMaker Endpoints console](https://console.aws.amazon.com/sagemaker/home#/endpoints). Delete the endpoint created during the lab.
