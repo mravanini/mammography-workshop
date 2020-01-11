@@ -124,11 +124,11 @@ http://sg-tko-workshop-public-123456789011.s3-website.region.amazonaws.com/
 7. Open the URL in a browser, upload a mammography image and see the results!
 Download a sample mammography image here: 
 
-* CC-Right: https://mammography-workshop.s3.amazonaws.com/sample/resize_CCD_564.jpg?raw=true
-* CC-Left: https://mammography-workshop.s3.amazonaws.com/sample/resize_CCE_835.jpg?raw=true
-* MLO-Right: https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOD_682.jpg?raw=true
-* MLO-Left: https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOE_743.jpg?raw=true
-* Not a mammography: https://mammography-workshop.s3.amazonaws.com/sample/resize_NAO_MG_1.3.51.0.7.11929756167.13783.28228.48520.63660.34753.63542.dcm.jpg?raw=true
+* [CC-Right](https://mammography-workshop.s3.amazonaws.com/sample/resize_CCD_564.jpg?raw=true)
+* [CC-Left](https://mammography-workshop.s3.amazonaws.com/sample/resize_CCE_835.jpg?raw=true)
+* [MLO-Right](https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOD_682.jpg?raw=true)
+* [MLO-Left](https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOE_743.jpg?raw=true)
+* [Not a mammography](https://mammography-workshop.s3.amazonaws.com/sample/resize_NAO_MG_1.3.51.0.7.11929756167.13783.28228.48520.63660.34753.63542.dcm.jpg?raw=true)
 
 
 ## 6 - Step Functions
