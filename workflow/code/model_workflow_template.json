@@ -10,7 +10,7 @@
       "Resource": "arn:aws:states:::sagemaker:createTrainingJob.sync",
       "Parameters": {
         "AlgorithmSpecification": {
-          "TrainingImage": "<<training image URL>>",
+          "TrainingImage": "<<training_image_URL>>",
           "TrainingInputMode": "File"
         },
         "OutputDataConfig": {
@@ -31,7 +31,7 @@
               "S3DataSource": {
                 "S3DataDistributionType": "FullyReplicated",
                 "S3DataType": "S3Prefix",
-                "S3Uri": "s3://<<name of the bucket with the input images>>/resize/train/"
+                "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/train/"
               }
             },
             "ChannelName": "train",
@@ -42,7 +42,7 @@
               "S3DataSource": {
                 "S3DataDistributionType": "FullyReplicated",
                 "S3DataType": "S3Prefix",
-                "S3Uri": "s3://<<name of the bucket with the input images>>/resize/test/"
+                "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/test/"
               }
             },
             "ChannelName": "validation",
@@ -53,7 +53,7 @@
               "S3DataSource": {
                 "S3DataDistributionType": "FullyReplicated",
                 "S3DataType": "S3Prefix",
-                "S3Uri": "s3://<<name of the bucket with the input images>>/resize/train-data.lst"
+                "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/train-data.lst"
               }
             },
             "ChannelName": "train_lst",
@@ -64,7 +64,7 @@
               "S3DataSource": {
                 "S3DataDistributionType": "FullyReplicated",
                 "S3DataType": "S3Prefix",
-                "S3Uri": "s3://<<name of the bucket with the input images>>/resize/test-data.lst"
+                "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/test-data.lst"
               }
             },
             "ChannelName": "validation_lst",
@@ -91,7 +91,7 @@
     "Save Model": {
       "Parameters": {
         "PrimaryContainer": {
-          "Image": "<<training image URL>>",
+          "Image": "<<training_image_URL>>",
           "Environment": {},
           "ModelDataUrl.$": "$.ModelArtifacts.S3ModelArtifacts"
         },

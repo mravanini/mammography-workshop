@@ -66,37 +66,46 @@ Now that you have your Lambda function ready, you can create your Workflow.
 **Step 11:** In the code you just copied inside the "Definition" field, replace the following information:
 
 - "Resource": "<<arn_of_your_lambda>>"
+
     [Click here](https://console.aws.amazon.com/lambda/home?/functions/mlDataPrep#/functions/mlDataPrep?tab=configuration) to open the Configuration tab of your lambda function. On the top right corner, you will find the Lambda's function ARN.
-- "TrainingImage": "<<training image URL>>"
+- "TrainingImage": "<<training_image_URL>>"
     Replace the training image URL according to your region:
     - N. Virginia: replace by "811284229777.dkr.ecr.us-east-1.amazonaws.com/image-classification:latest"
     - Ohio (us-east-2): replace by "825641698319.dkr.ecr.us-east-2.amazonaws.com/image-classification:latest"
     - Oregon (us-west-2): replace by "433757028032.dkr.ecr.us-west-2.amazonaws.com/image-classification:latest"
     - Ireland (eu-west-1): replace by "685385470294.dkr.ecr.eu-west-1.amazonaws.com/image-classification:latest"
 - "S3OutputPath": "s3://<<your_output_bucket>>/models"
+
     The name of the bucket created for the output files by the first CloudFormation of this lab.
 - "RoleArn": "<<arn_of_your_sagemaker_execution_role>>"
+
     Navigate to your [notebook instances](https://console.aws.amazon.com/sagemaker/home#/notebook-instances)
     There, click on the instance created for this lab. In the **Permissions and encryption** field, you will see **IAM role ARN**. Copy that value and paste here. You will need this information below again. 
-- "S3Uri": "s3://<<name of the bucket with the input images>>/resize/train/"
+- "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/train/"
+
     This should be, depending on your region:
         - N. Virginia: replace by "mammography-workshop"
         - Ohio (us-east-2): replace by "mammography-workshop-ohio"
         - Oregon (us-west-2): replace by "mammography-workshop-oregon"
         - Ireland (eu-west-1): replace by "mammography-workshop-ireland"
-- "S3Uri": "s3://<<name of the bucket with the input images>>/resize/test/"
+- "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/test/"
+
     Same as above.
-- "S3Uri": "s3://<<name of the bucket with the input images>>/resize/train-data.lst"
+- "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/train-data.lst"
+
     Same as above.
-- "S3Uri": "s3://<<name of the bucket with the input images>>/resize/test-data.lst"
+- "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/test-data.lst"
+
     Same as above.
-- "Image": "<<training image URL>>" 
+- "Image": "<<training_image_URL>>" 
+
     Replace the training image URL according to your region:
     - N. Virginia: replace by "811284229777.dkr.ecr.us-east-1.amazonaws.com/image-classification:latest"
     - Ohio (us-east-2): replace by "825641698319.dkr.ecr.us-east-2.amazonaws.com/image-classification:latest"
     - Oregon (us-west-2): replace by "433757028032.dkr.ecr.us-west-2.amazonaws.com/image-classification:latest"
     - Ireland (eu-west-1): replace by "685385470294.dkr.ecr.eu-west-1.amazonaws.com/image-classification:latest"
 - "ExecutionRoleArn": "<<arn_of_your_sagemaker_execution_role>>"
+
     Paste here the same information of "RoleArn" above.
     
     
