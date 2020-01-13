@@ -15,7 +15,7 @@ def lambda_handler(event, context):
     #bucket to write the lst files 
     output_bucket='<<output_bucket_name>>'
     
-    prefix = 'mammography-images'
+    prefix = 'resize'
     train_folder = 'train'
     test_folder = 'test'    
     train_file_name = 'train-data.lst'
