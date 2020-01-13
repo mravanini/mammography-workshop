@@ -47,7 +47,14 @@ Before we can create our workflow, we need to create the Lambda function respons
 
 **Step 6:** The last step to finalize our function is to modify the source code. Download the source code [here](code/generate_lst_lambda_template.py?raw=True) and paste it into the "Function Code" field.
 
-**Step 7:** Now follow the instructions in the source code and modify the name of the buckets. Then save and test the function. Check the function output logs. If successful, you will see the following message:
+**Step 7:** Now follow the instructions in the source code and modify the name of the buckets according to the list below. 
+
+- N. Virginia (us-east-1): replace by "mammography-workshop"
+- Ohio (us-east-2): replace by "mammography-workshop-ohio"
+- Oregon (us-west-2): replace by "mammography-workshop-oregon"
+- Ireland (eu-west-1): replace by "mammography-workshop-ireland"
+
+Then save and test the function. Check the function output logs. If successful, you will see the following message:
 
 ![Image](./images/Figure_8.png)
 
@@ -70,7 +77,7 @@ Now that you have your Lambda function ready, you can create your Workflow.
     [Click here](https://console.aws.amazon.com/lambda/home?/functions/mlDataPrep#/functions/mlDataPrep?tab=configuration) to open the Configuration tab of your lambda function. On the top right corner, you will find the Lambda's function ARN.
 - "TrainingImage": "<<training_image_URL>>"
     Replace the training image URL according to your region:
-    - N. Virginia: replace by "811284229777.dkr.ecr.us-east-1.amazonaws.com/image-classification:latest"
+    - N. Virginia (us-east-1): replace by "811284229777.dkr.ecr.us-east-1.amazonaws.com/image-classification:latest"
     - Ohio (us-east-2): replace by "825641698319.dkr.ecr.us-east-2.amazonaws.com/image-classification:latest"
     - Oregon (us-west-2): replace by "433757028032.dkr.ecr.us-west-2.amazonaws.com/image-classification:latest"
     - Ireland (eu-west-1): replace by "685385470294.dkr.ecr.eu-west-1.amazonaws.com/image-classification:latest"
@@ -84,7 +91,7 @@ Now that you have your Lambda function ready, you can create your Workflow.
 - "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/train/"
 
     This should be, depending on your region:
-        - N. Virginia: replace by "mammography-workshop"
+        - N. Virginia (us-east-1): replace by "mammography-workshop"
         - Ohio (us-east-2): replace by "mammography-workshop-ohio"
         - Oregon (us-west-2): replace by "mammography-workshop-oregon"
         - Ireland (eu-west-1): replace by "mammography-workshop-ireland"
@@ -100,7 +107,7 @@ Now that you have your Lambda function ready, you can create your Workflow.
 - "Image": "<<training_image_URL>>" 
 
     Replace the training image URL according to your region:
-    - N. Virginia: replace by "811284229777.dkr.ecr.us-east-1.amazonaws.com/image-classification:latest"
+    - N. Virginia (us-east-1): replace by "811284229777.dkr.ecr.us-east-1.amazonaws.com/image-classification:latest"
     - Ohio (us-east-2): replace by "825641698319.dkr.ecr.us-east-2.amazonaws.com/image-classification:latest"
     - Oregon (us-west-2): replace by "433757028032.dkr.ecr.us-west-2.amazonaws.com/image-classification:latest"
     - Ireland (eu-west-1): replace by "685385470294.dkr.ecr.eu-west-1.amazonaws.com/image-classification:latest"
