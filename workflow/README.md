@@ -45,7 +45,7 @@ Before we can create our workflow, we need to create the Lambda function respons
 
 ![Image](./images/Figure_7.png)
 
-**Step 6:** The last step to finalize our function is to modify the source code. Download the source code [here](code/generate_lst_lambda_template.py) and paste it into the "Function Code" field.
+**Step 6:** The last step to finalize our function is to modify the source code. Download the source code [here](code/generate_lst_lambda_template.py?raw=True) and paste it into the "Function Code" field.
 
 **Step 7:** Now follow the instructions in the source code and modify the name of the buckets. Then save and test the function. Check the function output logs. If successful, you will see the following message:
 
@@ -57,7 +57,7 @@ Now that you have your Lambda function ready, you can create your Workflow.
 
 **Step 8:** Go to the step functions console and create a new State Machine by clicking on "State Machines" / "Create state machine".
 
-**Step 9:** Download/Open the workflow definition file [here](code/model_workflow_template.json) and paste the contents into the "Definition" field.
+**Step 9:** Download/Open the workflow definition file [here](code/model_workflow_template.json?raw=True) and paste the contents into the "Definition" field.
 
 **Step 10:** Click the "refresh" button in the picture to see the graphical representation of your workflow. It should look like the following image:
 
