@@ -63,13 +63,50 @@ Now that you have your Lambda function ready, you can create your Workflow.
 
 ![Image](./images/Figure_9.png)
 
-**Step 11:** Now click "Next", fill out the fields as the image below and click "Create state machine".
+**Step 11:** In the code you just copied inside the "Definition" field, replace the following information:
+
+- "Resource": "<<arn_of_your_lambda>>"
+    [Click here](https://console.aws.amazon.com/lambda/home?/functions/mlDataPrep#/functions/mlDataPrep?tab=configuration) to open the Configuration tab of your lambda function. On the top right corner, you will find the Lambda's function ARN.
+- "TrainingImage": "<<training image URL>>"
+    Replace the training image URL according to your region:
+    - N. Virginia: replace by "811284229777.dkr.ecr.us-east-1.amazonaws.com/image-classification:latest"
+    - Ohio (us-east-2): replace by "825641698319.dkr.ecr.us-east-2.amazonaws.com/image-classification:latest"
+    - Oregon (us-west-2): replace by "433757028032.dkr.ecr.us-west-2.amazonaws.com/image-classification:latest"
+    - Ireland (eu-west-1): replace by "685385470294.dkr.ecr.eu-west-1.amazonaws.com/image-classification:latest"
+- "S3OutputPath": "s3://<<your_output_bucket>>/models"
+    The name of the bucket created for the output files by the first CloudFormation of this lab.
+- "RoleArn": "<<arn_of_your_sagemaker_execution_role>>"
+    Navigate to your [notebook instances](https://console.aws.amazon.com/sagemaker/home#/notebook-instances)
+    There, click on the instance created for this lab. In the **Permissions and encryption** field, you will see **IAM role ARN**. Copy that value and paste here. You will need this information below again. 
+- "S3Uri": "s3://<<name of the bucket with the input images>>/resize/train/"
+    This should be, depending on your region:
+        - N. Virginia: replace by "mammography-workshop"
+        - Ohio (us-east-2): replace by "mammography-workshop-ohio"
+        - Oregon (us-west-2): replace by "mammography-workshop-oregon"
+        - Ireland (eu-west-1): replace by "mammography-workshop-ireland"
+- "S3Uri": "s3://<<name of the bucket with the input images>>/resize/test/"
+    Same as above.
+- "S3Uri": "s3://<<name of the bucket with the input images>>/resize/train-data.lst"
+    Same as above.
+- "S3Uri": "s3://<<name of the bucket with the input images>>/resize/test-data.lst"
+    Same as above.
+- "Image": "<<training image URL>>" 
+    Replace the training image URL according to your region:
+    - N. Virginia: replace by "811284229777.dkr.ecr.us-east-1.amazonaws.com/image-classification:latest"
+    - Ohio (us-east-2): replace by "825641698319.dkr.ecr.us-east-2.amazonaws.com/image-classification:latest"
+    - Oregon (us-west-2): replace by "433757028032.dkr.ecr.us-west-2.amazonaws.com/image-classification:latest"
+    - Ireland (eu-west-1): replace by "685385470294.dkr.ecr.eu-west-1.amazonaws.com/image-classification:latest"
+- "ExecutionRoleArn": "<<arn_of_your_sagemaker_execution_role>>"
+    Paste here the same information of "RoleArn" above.
+    
+    
+**Step 12:** Now click "Next", fill out the fields as the image below and click "Create state machine".
 
 ![Image](./images/Figure_10.png)
 
 Congratulations! You have created your first Machine Learning Workflow. 
 
-**Step 12:** To test it, click "Start execution". The workflow should take about 10 minutes to complete. If successful, at the end you will see the following image, with all the steps colored in green:
+**Step 13:** To test it, click "Start execution". The workflow should take about 10 minutes to complete. If successful, at the end you will see the following image, with all the steps colored in green:
 
 ![Image](./images/Figure_11.png)
 
