@@ -48,9 +48,10 @@ To get started you will need an IAM user with the following access:
 Before we can start the workshop, we need to have a SageMaker Jupyter Notebook deployed in your account. It will also create a bucket for output files.
 
 **CloudFormation**
-1. Deploy the following CloudFormation template: https://console.aws.amazon.com/cloudformation/home?#/stacks/create/template?stackName=sagemaker-mammography-workshop&templateURL=https://mammography-workshop.s3.amazonaws.com/cloudformationtemplate/sagemaker_template.yml
-2. On the "Step 3 - Configure stack options": Just click on **Next** button
-3. On the "Step 4 - Review": Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
+1. Login in the AWS Console. Make sure you are in the correct region assigned for this workshop.
+2. Deploy the following CloudFormation template: https://console.aws.amazon.com/cloudformation/home?#/stacks/create/template?stackName=sagemaker-mammography-workshop&templateURL=https://mammography-workshop.s3.amazonaws.com/cloudformationtemplate/sagemaker_template.yml
+3. On the "Step 3 - Configure stack options": Just click on **Next** button
+4. On the "Step 4 - Review": Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
 
 
 ## 2 - Presentation
@@ -72,7 +73,7 @@ In order for us to do that, we will need to open the Jupyter Notebook created in
 
 1. Open the SageMaker Notebook console at https://console.aws.amazon.com/sagemaker/home#/notebook-instances
 2. Click on **Open JupyterLab**
-3. In SageMaker, click on **Git** and then **Open Terminal**. Execute the code below in the terminal:
+3. In the Jupyter Lab console, click on **Git** and then **Open Terminal**. Execute the code below in the terminal:
     ```
     cd SageMaker
     git clone https://github.com/mravanini/mammography-workshop.git
