@@ -2,19 +2,17 @@
 
 [1 - Creating the SageMaker Jupyter Notebook](#1---creating-the-sagemaker-jupyter-notebook)
 
-[2 - Presentation](#2---presentation)
+[2 - Ground Truth](#2---ground-truth)
 
-[3 - Ground Truth](#3---ground-truth)
+[3 - Training, testing, and deploying the Mammography Classification model](#3---training-testing-and-deploying-the-mammography-classification-model)
 
-[4 - Training, testing, and deploying the Mammography Classification model](#4---training-testing-and-deploying-the-mammography-classification-model)
+[4 - Front end](#4---front-end)
 
-[5 - Front end](#5---front-end)
+[5 - Step Functions](#5---step-functions)
 
-[6 - Step Functions](#6---step-functions)
+[6 - Clean Up](#6---clean-up)
 
-[7 - Clean Up](#7---clean-up)
-
-[8 - Reference Links](#8---reference-links)
+[7 - Reference Links](#7---reference-links)
 
 
 Today we will learn how to classify mammography images into 5 different categories using Amazon SageMaker, Amazon GroundTruth, AWS StepFunctions, AWS Lambda, and much more!
@@ -54,16 +52,11 @@ Before we can start the workshop, we need to have a SageMaker Jupyter Notebook d
 4. On the "Step 4 - Review": Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
 
 
-## 2 - Presentation
-
-While you wait for the template to be deployed, let's learn from our instructors the motivation behind this workshop and what we plan to deliver today.
-
-
-## 3 - Ground Truth
+## 2 - Ground Truth
 
 Let's navigate to the [Ground Truth lab](groundtruth#sagemaker-ground-truth).
 
-## 4 - Training, testing, and deploying the Mammography Classification model
+## 3 - Training, testing, and deploying the Mammography Classification model
 
 The architecture below represents what we will deploy today:
 
@@ -92,7 +85,7 @@ If successful, you should see a message like this:
 
 5. Now follow the instructions described in the notebook.  
 
-## 5 - Front end
+## 4 - Front end
 
 We will now deploy a front-end static application in order for us to test our model.
 
@@ -132,12 +125,12 @@ Download a sample mammography image here:
 * [Not a mammography](https://mammography-workshop.s3.amazonaws.com/sample/resize_NAO_MG_1.3.51.0.7.11929756167.13783.28228.48520.63660.34753.63542.dcm.jpg?raw=true)
 
 
-## 6 - Step Functions
+## 5 - Step Functions
 
 Let's navigate to the [Step Functions lab](workflow#ml-workflow).
 
 
-## 7 - Clean Up
+## 6 - Clean Up
 * Deleting client app
     1. In the notebook Terminal, run deploy script with delete function
     ```
@@ -154,7 +147,7 @@ Let's navigate to the [Step Functions lab](workflow#ml-workflow).
 * Deleting the SageMaker endpoint
     1. Go to the [SageMaker Endpoints console](https://console.aws.amazon.com/sagemaker/home#/endpoints). Delete the endpoint created during the lab.
 
-## 8 - Reference Links
+## 7 - Reference Links
 * AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
 * Python boto3: https://boto3.amazonaws.com/v1/documentation/api/latest/index.html?id=docs_gateway
 * SageMaker: https://docs.aws.amazon.com/sagemaker/latest/dg/gs.html
