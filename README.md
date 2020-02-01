@@ -17,12 +17,13 @@
 
 Today we will learn how to classify mammography images into 5 different categories using Amazon SageMaker, Amazon GroundTruth, AWS StepFunctions, AWS Lambda, and much more!
 
-You will need to use your own AWS account for this workshop, and all information will be provided through this documentation.
+You will need to use your an AWS account for this workshop, and all information will be provided through this documentation.
 
 **Let's begin!**
 
-To get started you will need an IAM user with the following access:
+To get started, you will need an IAM user with permissions on the following services:
 - CloudFormation
+- CloudFront
 - S3
 - IAM
 - Cognito
@@ -32,7 +33,8 @@ To get started you will need an IAM user with the following access:
 - Lambda
 
 *Pre-requirements:*
-- Service limit of 1 GPU instance type (p2, p3, etc.)
+- Service limit of 1 SageMaker ml.t2.large instance
+- Service limit of 1 SageMaker GPU instance type (ml.p2.xlarge, ml.p3.xlarge, etc)
 - Service limit to create 2 more buckets
 
 *This lab has been tested in the following regions:*
@@ -43,14 +45,20 @@ To get started you will need an IAM user with the following access:
 
 ## 1 - Creating the SageMaker Jupyter Notebook
 
-Before we can start the workshop, we need to have a SageMaker Jupyter Notebook deployed in your account. It will also create a bucket for output files.
+Before we can start the workshop, we need to have a SageMaker Jupyter Notebook deployed in your account. The CloudFormation below will also create a bucket for the files needed for this workshop.
 
 **CloudFormation**
-1. Login in the AWS Console. Make sure you are in the correct region assigned for this workshop.
-2. Deploy the following CloudFormation template: https://console.aws.amazon.com/cloudformation/home?#/stacks/create/template?stackName=sagemaker-mammography-workshop&templateURL=https://mammography-workshop.s3.amazonaws.com/cloudformationtemplate/sagemaker_template.yml
-3. On the "Step 3 - Configure stack options": Just click on **Next** button
-4. On the "Step 4 - Review": Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
+1. [Click here](sagemaker_template.yml?raw=true) to download the **sagemaker_template.yml** template file you are going to use to deploy the basic infrastructure for this workshop.
+1. Login in the [AWS Console](https://console.aws.amazon.com/console/home). Make sure you are in the correct region assigned for this workshop.
+1. Navigate to CloudFormation console: [https://console.aws.amazon.com/cloudformation/home](https://console.aws.amazon.com/cloudformation/home)
+1. Once there, choose **Create Stack**.
+1. On "Step 1 - Create Stack", choose **Upload a template file**, then click on the **Choose file** button.
+    1. Choose the template file you downloaded in Step 1. Click **Next**
+1. On "Step 2", type in the stack name: **SageMaker-Mammography-Workshop**. Click **Next**
+1. On "Step 3 - Configure stack options": Just click on **Next** button
+1. On "Step 4 - Review": Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
 
+Move on to the next part of the Lab.
 
 ## 2 - Ground Truth
 

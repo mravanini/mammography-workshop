@@ -127,4 +127,4 @@ Congratulations! You have created your first Machine Learning Workflow.
 ![Image](./images/Figure_11.png)
 
 
-Let's go back to the lab by clicking [here](/../../#6---step-functions)
+Let's go back to the lab by clicking [here](/../../#5---step-functions)
