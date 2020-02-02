@@ -28,21 +28,13 @@ create() {
 	done
 	echo "Stack created successfully!"
 
-  #FYI - the order of the output makes no sense:
-  #Stacks[0].Outputs[0] = CognitoIdentityPoolId
-  #Stacks[0].Outputs[1] = CloudFrontOriginAccessIdentity
-  #Stacks[0].Outputs[2] = Region
-  #Stacks[0].Outputs[3] = S3StaticWebsiteBucket
-  #Stacks[0].Outputs[4] = OriginDomainName
-  #Stacks[0].Outputs[5] = PrivateBucket
 
-
-  cognito_id=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[0].OutputValue)
-  origin_access_identity=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
-  region=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[2].OutputValue)
-  website_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[3].OutputValue)
-  origin_domain_name=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[4].OutputValue)
-  private_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[5].OutputValue)
+  cognito_id=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[?OutputKey==`CognitoIdentityPoolId`].OutputValue)
+  region=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[?OutputKey==`Region`].OutputValue)
+  website_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[?OutputKey==`S3StaticWebsiteBucket`].OutputValue)
+  private_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[?OutputKey==`PrivateBucket`].OutputValue)
+  origin_access_identity=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[?OutputKey==`CloudFrontOriginAccessIdentity`].OutputValue)
+  origin_domain_name=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[?OutputKey==`OriginDomainName`].OutputValue)
 
   echo 'cognito_id' $cognito_id
   echo 'origin_access_identity' $origin_access_identity
@@ -96,8 +88,9 @@ END
 
 delete() {
     echo "Deleting resources..."
-    website_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[3].OutputValue)
-    private_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[5].OutputValue)
+
+    website_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[?OutputKey==`S3StaticWebsiteBucket`].OutputValue)
+    private_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[?OutputKey==`PrivateBucket`].OutputValue)
     aws s3 rm s3://$website_bucket/ --recursive --quiet
     aws s3 rm s3://$private_bucket/ --recursive --quiet
     aws cloudformation delete-stack --stack-name mammography-workshop-client-front
