@@ -33,32 +33,20 @@ create() {
   #Stacks[0].Outputs[1] = CloudFrontOriginAccessIdentity
   #Stacks[0].Outputs[2] = Region
   #Stacks[0].Outputs[3] = S3StaticWebsiteBucket
-  #Stacks[0].Outputs[4] = PrivateBucket
-  #OriginDomainName
-
-
+  #Stacks[0].Outputs[4] = OriginDomainName
+  #Stacks[0].Outputs[5] = PrivateBucket
 
 
   cognito_id=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[0].OutputValue)
   origin_access_identity=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
   region=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[2].OutputValue)
   website_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[3].OutputValue)
-  private_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[4].OutputValue)
-  origin_domain_name=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[5].OutputValue)
-
-
-  echo 'cognito_id' $cognito_id
-  echo 'region' $region
-  echo 'website_bucket' $website_bucket
-  echo 'private_bucket' $private_bucket
-  echo 'origin_access_identity' $origin_access_identity
-  echo 'origin_domain_name' $origin_domain_name
-
-: <<'END'
+  origin_domain_name=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[4].OutputValue)
+  private_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[5].OutputValue)
 
 	echo "Deploying CloudFront ..."
 
-  stack_id_cloudfront=$(aws cloudformation create-stack --stack-name mammography-workshop-cloudfront --template-body file://cloudfront_template.yml --parameters ParameterKey=CloudFrontOriginAccessIdentity,ParameterValue=$origin_access_identity ParameterKey=S3StaticWebsiteBucket,ParameterValue=$website_bucket --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
+  stack_id_cloudfront=$(aws cloudformation create-stack --stack-name mammography-workshop-cloudfront --template-body file://cloudfront_template.yml --parameters ParameterKey=CloudFrontOriginAccessIdentity,ParameterValue=$origin_access_identity ParameterKey=S3StaticWebsiteBucket,ParameterValue=$origin_domain_name --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
   # Since this will take several minutes to deploy, we won't keep track of its status. Let's move on.
 
 	echo "Uploading frontend..."
@@ -95,13 +83,13 @@ EOL
   #client_url=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
 #  echo "Website URL: " $client_url
 
-END
+
 }
 
 delete() {
     echo "Deleting resources..."
     website_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[3].OutputValue)
-    private_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[4].OutputValue)
+    private_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[5].OutputValue)
     aws s3 rm s3://$website_bucket/ --recursive --quiet
     aws s3 rm s3://$private_bucket/ --recursive --quiet
     aws cloudformation delete-stack --stack-name mammography-workshop-client-front
