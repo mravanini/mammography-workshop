@@ -100,3 +100,7 @@ Outputs:
   CognitoIdentityPoolId:
     Description: Identity ID to access AWS resources.
     Value: !Ref CognitoIdentityPoolId
+
+  CloudFrontOriginAccessIdentity:
+    Description: CloudFront Origin Access Identity.
+    Value: !Ref CloudFrontOriginAccessIdentity
