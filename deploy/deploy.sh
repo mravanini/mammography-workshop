@@ -9,6 +9,8 @@ usage() {
 }
 
 create() {
+
+  : <<'END'
   # Frontend resources
   echo "Deploying Client App frontend..."
   echo "Creating CloudFormation stack. This can take about 3 minutes..."
@@ -71,11 +73,23 @@ EOL
 	done
 	echo "Stack created successfully!"
 
+
+END
+  
   # Outputs
-  #client_url=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
-#  echo "Website URL: " $client_url
 
+  outputs
 
+}
+
+outputs(){
+
+  yum install jq
+
+  distribution=$(aws cloudfront list-distributions --query DistributionList.Items[*])
+  printf "%s" "$distribution" > "distribution.json"
+
+  jq -r ' .[] | select( .Origins.Items[].DomainName | startswith("mammography-static-website")) | .DomainName' distribution.json
 }
 
 delete() {
