@@ -110,23 +110,18 @@ The client application architecture is depicted below:
     ```
     cd mammography-workshop/deploy
     ```
-3. Paste the following command to get the latest mammography classification endpoint:
-    
-   ```
-    aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'InService' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName
-   ```
-
-4. Copy the endpoint-name. It will look something like this: 'mammography-classification-2020-01-13-09-58-43'
-
-5. Run the deploy script. Replace the <<endpoint_name>> below by the endpoint copied in step 4.
+3. Run the deploy script. 
     ```
-    ./deploy.sh create <<endpoint_name>>
+    ./deploy.sh create 
     ```
 6. Copy the Client URL from the script output.
 It will look something like this: 
 ```
-http://sg-tko-workshop-public-123456789011.s3-website.region.amazonaws.com/
+d12yz34h5w67br.cloudfront.net
 ```
+
+This is an URL for the AWS content delivery network called Amazon CloudFront. **If you get an error accessing the page, wait a few more minutes and refresh your page.** It might take some time for CloudFront to propagate your site to it's edge locations. 
+
 
 7. Open the URL in a browser, upload a mammography image and see the results!
 Download a sample mammography image here: 

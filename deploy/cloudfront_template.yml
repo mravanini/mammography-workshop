@@ -46,7 +46,8 @@ Resources:
             S3OriginConfig:
               OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         PriceClass: 'PriceClass_100'
-
+        CustomErrorResponses:
+          - ErrorCachingMinTTL: '10'
 
 
 Outputs:
