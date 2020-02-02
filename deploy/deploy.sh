@@ -4,11 +4,27 @@ usage() {
     echo "usage: $0 <command>"
 
     echo "Available commands:"
-    echo -e "  create <SAGEMAKER ENDPOINT>\tCreate client resources"
+    echo -e "  create \tCreate client resources"
     echo -e "  delete\tDelete client resources"
 }
 
 create() {
+
+  # Mandatory parameter validation
+  endpoint=$(aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'InService' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName)
+  if [ -z $endpoint ]; then
+      endpoint_not_ready=$(aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'Creating' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName)
+      if [ ! -z $endpoint_not_ready ]; then
+  			echo "Your endpoint is not In Service yet. Wait a few minutes and try again."
+  			exit 1
+
+      fi
+
+			echo "Your model endpoint could not be found. Access https://console.aws.amazon.com/sagemaker/home?#/endpoints/ to make sure you have an endpoint called 'mammography-classification-<timestamp>' deployed."
+			exit 1
+
+  fi
+
 
   : <<'END'
   # Frontend resources
@@ -59,7 +75,8 @@ EOL
   zip -j ../client-app/lambda/code/lambda_invoke_classifier.zip ../client-app/lambda/code/lambda_invoke_classifier.py --quiet
   zip -j ../client-app/lambda/code/lambda_resize_image.zip ../client-app/lambda/code/lambda_resize_image.py --quiet
   aws s3 cp ../client-app/lambda/ s3://$private_bucket --recursive --quiet
-  stack_id_back=$(aws cloudformation create-stack --stack-name mammography-workshop-client-back --template-body file://backend_client_template.yml --parameters ParameterKey=Endpoint,ParameterValue=$1 ParameterKey=PrivateBucket,ParameterValue=$private_bucket --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
+
+  stack_id_back=$(aws cloudformation create-stack --stack-name mammography-workshop-client-back --template-body file://backend_client_template.yml --parameters ParameterKey=Endpoint,ParameterValue=$endpoint ParameterKey=PrivateBucket,ParameterValue=$private_bucket --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
   stack_status_check="aws cloudformation describe-stacks --stack-name $stack_id_back --output text --query Stacks[0].StackStatus"
 	stack_status=$($stack_status_check)
   while [ $stack_status != "CREATE_COMPLETE" ]; do
@@ -75,7 +92,7 @@ EOL
 
 
 END
-  
+
   # Outputs
 
   outputs
@@ -84,7 +101,7 @@ END
 
 outputs(){
 
-  yum install jq
+#  yum install jq
 
   distribution=$(aws cloudfront list-distributions --query DistributionList.Items[*])
   printf "%s" "$distribution" > "distribution.json"
@@ -106,17 +123,11 @@ delete() {
 
 if [[ $# -gt 0 ]]; then
     command=$1
-    parameter=$2
 
     case $command in
 
     create )
-        if [[ $# == 2 ]]; then
-            create $parameter
-        else
-            usage
-            exit
-        fi
+          create
         ;;
 
     delete )
