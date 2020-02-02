@@ -12,8 +12,12 @@ create() {
 
   # Mandatory parameter validation
   endpoint=$(aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'InService' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName)
+  echo $endpoint
   if [ -z $endpoint ]; then
       endpoint_not_ready=$(aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'Creating' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName)
+
+      echo $endpoint_not_ready
+
       if [ ! -z $endpoint_not_ready ]; then
   			echo "Your endpoint is not In Service yet. Wait a few minutes and try again."
   			exit 1
