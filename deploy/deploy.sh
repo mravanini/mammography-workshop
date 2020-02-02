@@ -28,26 +28,24 @@ create() {
 	done
 	echo "Stack created successfully!"
 
-  #Remove after testing
-  output_0=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[0].OutputValue)
-  echo "output_0 : " $output_0
+  #FYI - the order makes no sense:
+  #Stacks[0].Outputs[0] = CognitoIdentityPoolId
+  #Stacks[0].Outputs[1] = Region
+  #Stacks[0].Outputs[2] = S3StaticWebsiteBucket
+  #Stacks[0].Outputs[3] = PrivateBucket
 
-  output_1=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
-  echo "output_1 : " $output_1
-
-  output_2=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[2].OutputValue)
-  echo "output_2 : " $output_2
-
-  output_3=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[3].OutputValue)
-  echo "output_3 : " $output_3
-
-  #End of Remove after testing
-
-: <<'END'
-	echo "Uploading frontend..."
-  region=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[2].OutputValue)
-  private_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[4].OutputValue)
   cognito_id=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[0].OutputValue)
+  region=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
+  website_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[2].OutputValue)
+  private_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[3].OutputValue)
+
+
+	echo "Deploying CloudFront ..."
+
+  stack_id_cloudfront=$(aws cloudformation create-stack --stack-name mammography-workshop-cloudfront --template-body file://cloudfront_template.yml --parameters ParameterKey=CloudFrontOriginAccessIdentity,ParameterValue=$cognito_id ParameterKey=S3StaticWebsiteBucket,ParameterValue=$website_bucket --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
+  # Since this will take several minutes to deploy, we won't keep track of its status. Let's move on.
+
+	echo "Uploading frontend..."
   cat > ../client-app/frontend/config.js << EOL
 
   const REGION='$region'
@@ -55,8 +53,7 @@ create() {
   const PRIVATE_BUCKET='$private_bucket'
 EOL
 
-  public_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[3].OutputValue)
-	aws s3 cp ../client-app/frontend/ s3://$public_bucket --recursive --quiet
+	aws s3 cp ../client-app/frontend/ s3://$website_bucket --recursive --quiet
 
   # Backend resources
   echo "Deploying Client App backend..."
@@ -79,20 +76,21 @@ EOL
 	echo "Stack created successfully!"
 
   # Outputs
-  client_url=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
-  echo "Website URL: " $client_url
+  #client_url=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
+#  echo "Website URL: " $client_url
 
-END
+
 }
 
 delete() {
     echo "Deleting resources..."
-    private_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[4].OutputValue)
-    public_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[3].OutputValue)
-    aws s3 rm s3://$public_bucket/ --recursive --quiet
+    private_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[3].OutputValue)
+    website_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[2].OutputValue)
+    aws s3 rm s3://$website_bucket/ --recursive --quiet
     aws s3 rm s3://$private_bucket/ --recursive --quiet
     aws cloudformation delete-stack --stack-name mammography-workshop-client-front
     aws cloudformation delete-stack --stack-name mammography-workshop-client-back
+    aws cloudformation delete-stack --stack-name mammography-workshop-cloudfront
 }
 
 if [[ $# -gt 0 ]]; then
