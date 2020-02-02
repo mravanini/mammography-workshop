@@ -36,14 +36,6 @@ create() {
   origin_access_identity=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[?OutputKey==\`CloudFrontOriginAccessIdentity\`].OutputValue)
   origin_domain_name=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[?OutputKey==\`OriginDomainName\`].OutputValue)
 
-  echo 'cognito_id' $cognito_id
-  echo 'origin_access_identity' $origin_access_identity
-  echo 'region' $region
-  echo 'website_bucket' $website_bucket
-  echo 'origin_domain_name' $origin_domain_name
-  echo 'private_bucket' $private_bucket
-
-: <<'END'
 	echo "Deploying CloudFront ..."
 
   stack_id_cloudfront=$(aws cloudformation create-stack --stack-name mammography-workshop-cloudfront --template-body file://cloudfront_template.yml --parameters ParameterKey=CloudFrontOriginAccessIdentity,ParameterValue=$origin_access_identity ParameterKey=S3StaticWebsiteBucket,ParameterValue=$origin_domain_name --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
@@ -83,7 +75,7 @@ EOL
   #client_url=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
 #  echo "Website URL: " $client_url
 
-END
+
 }
 
 delete() {
