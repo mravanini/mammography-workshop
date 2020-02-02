@@ -47,7 +47,8 @@ Resources:
               OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         PriceClass: 'PriceClass_100'
         CustomErrorResponses:
-          - ErrorCachingMinTTL: '10'
+          - ErrorCode: 500
+            ErrorCachingMinTTL: '10'
 
 
 Outputs:
