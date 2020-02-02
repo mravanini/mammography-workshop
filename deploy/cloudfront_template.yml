@@ -41,7 +41,7 @@ Resources:
         Enabled: true
         HttpVersion: http2
         Origins:
-          - DomainName: !GetAtt 'S3StaticWebsiteBucket'
+          - DomainName: !Ref S3StaticWebsiteBucket
             Id: s3origin
             S3OriginConfig:
               OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
