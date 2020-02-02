@@ -10,9 +10,9 @@ usage() {
 
 create() {
 
+  # Mandatory parameter validation
   validate_mandatory_parameters
 
-  : <<'END'
   # Frontend resources
   echo "Deploying Client App frontend..."
   echo "Creating CloudFormation stack. This can take about 3 minutes..."
@@ -76,9 +76,6 @@ EOL
 	done
 	echo "Stack created successfully!"
 
-
-END
-
   # Outputs
 
   outputs
@@ -106,7 +103,7 @@ validate_mandatory_parameters(){
 
 outputs(){
 
-#  yum install jq
+#  yum install jq -> not necessary when in AWS Jupyter Notebook
 
   distribution=$(aws cloudfront list-distributions --query DistributionList.Items[*])
   printf "%s" "$distribution" > "distribution.json"
