@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cloudfront_stack_name='mammography-workshop-cloudfront'
+front_stack_name='mammography-workshop-client-front'
+back_stack_name='mammography-workshop-client-back'
+
 usage() {
     echo "usage: $0 <command>"
 
@@ -16,7 +20,7 @@ create() {
   # Frontend resources
   echo "Deploying Client App frontend..."
   echo "Creating CloudFormation stack. This can take about 3 minutes..."
-	stack_id_front=$(aws cloudformation create-stack --stack-name mammography-workshop-client-front --template-body file://frontend_client_template.yml --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
+	stack_id_front=$(aws cloudformation create-stack --stack-name $front_stack_name --template-body file://frontend_client_template.yml --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
 
 	stack_status_check="aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].StackStatus"
 	stack_status=$($stack_status_check)
@@ -42,7 +46,7 @@ create() {
 
 	echo "Deploying CloudFront ..."
 
-  stack_id_cloudfront=$(aws cloudformation create-stack --stack-name mammography-workshop-cloudfront --template-body file://cloudfront_template.yml --parameters ParameterKey=CloudFrontOriginAccessIdentity,ParameterValue=$origin_access_identity ParameterKey=S3StaticWebsiteBucket,ParameterValue=$origin_domain_name --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
+  stack_id_cloudfront=$(aws cloudformation create-stack --stack-name $cloudfront_stack_name --template-body file://cloudfront_template.yml --parameters ParameterKey=CloudFrontOriginAccessIdentity,ParameterValue=$origin_access_identity ParameterKey=S3StaticWebsiteBucket,ParameterValue=$origin_domain_name --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
   # Since this will take several minutes to deploy, we won't keep track of its status. Let's move on.
 
 	echo "Uploading frontend..."
@@ -62,7 +66,7 @@ EOL
   zip -j ../client-app/lambda/code/lambda_resize_image.zip ../client-app/lambda/code/lambda_resize_image.py --quiet
   aws s3 cp ../client-app/lambda/ s3://$private_bucket --recursive --quiet
 
-  stack_id_back=$(aws cloudformation create-stack --stack-name mammography-workshop-client-back --template-body file://backend_client_template.yml --parameters ParameterKey=Endpoint,ParameterValue=$endpoint ParameterKey=PrivateBucket,ParameterValue=$private_bucket --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
+  stack_id_back=$(aws cloudformation create-stack --stack-name $back_stack_name --template-body file://backend_client_template.yml --parameters ParameterKey=Endpoint,ParameterValue=$endpoint ParameterKey=PrivateBucket,ParameterValue=$private_bucket --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
   stack_status_check="aws cloudformation describe-stacks --stack-name $stack_id_back --output text --query Stacks[0].StackStatus"
 	stack_status=$($stack_status_check)
   while [ $stack_status != "CREATE_COMPLETE" ]; do
@@ -114,13 +118,27 @@ outputs(){
 delete() {
     echo "Deleting resources..."
 
-    website_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[?OutputKey==\`S3StaticWebsiteBucket\`].OutputValue)
-    private_bucket=$(aws cloudformation describe-stacks --stack-name mammography-workshop-client-front --output text --query Stacks[0].Outputs[?OutputKey==\`PrivateBucket\`].OutputValue)
+
+    website_bucket=$(aws cloudformation describe-stacks --stack-name $front_stack_name --output text --query Stacks[0].Outputs[?OutputKey==\`S3StaticWebsiteBucket\`].OutputValue)
+    private_bucket=$(aws cloudformation describe-stacks --stack-name $front_stack_name --output text --query Stacks[0].Outputs[?OutputKey==\`PrivateBucket\`].OutputValue)
     aws s3 rm s3://$website_bucket/ --recursive --quiet
     aws s3 rm s3://$private_bucket/ --recursive --quiet
-    aws cloudformation delete-stack --stack-name mammography-workshop-client-front
-    aws cloudformation delete-stack --stack-name mammography-workshop-client-back
-    aws cloudformation delete-stack --stack-name mammography-workshop-cloudfront
+
+    aws cloudformation delete-stack --stack-name $back_stack_name
+    aws cloudformation wait stack-delete-complete --stack-name $back_stack_name
+    echo 'Backend stack deleted.'
+
+    aws cloudformation delete-stack --stack-name $cloudfront_stack_name
+    aws cloudformation wait stack-delete-complete --stack-name $cloudfront_stack_name
+    echo 'CloudFront stack deleted.'
+
+    # Cloudfront stack has dependencies with the front stack. Only delete this one after deleting CloudFront stack.
+    aws cloudformation delete-stack --stack-name $front_stack_name
+    aws cloudformation wait stack-delete-complete --stack-name $front_stack_name
+    echo 'Front stack deleted.'
+
+    echo 'Finished.'
+
 }
 
 if [[ $# -gt 0 ]]; then

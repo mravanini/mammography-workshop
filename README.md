@@ -139,22 +139,22 @@ Let's navigate to the [Step Functions lab](workflow#ml-workflow).
 
 
 ## 6 - Clean Up
-* Deleting client app
+* Deleting Client App
     1. In the notebook Terminal, run deploy script with delete function
     ```
     cd deploy
     ./deploy.sh delete
     ```
-
-#### !!! If you are an Amazon employee, make sure you delete the front-end. It has a Public Bucket that will escalate a ticket to your manager. 
-
-* Deleting SageMaker notebook
-    1. First delete the contents of the output bucket
-    2. Then go to [CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks) and delete **sagemaker-mammography-workshop** stack
-    
+    This might several minutes to finish, since it will delete CloudFront distribution. 
+  
 * Deleting the SageMaker endpoint
     1. Go to the [SageMaker Endpoints console](https://console.aws.amazon.com/sagemaker/home#/endpoints). Delete the endpoint created during the lab.
 
+* Deleting SageMaker notebook
+    1. **Only execute this step when the clean-up of "Client App" above has finished.** 
+    2. First delete the contents of the output bucket
+    3. Then go to [CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks) and delete **sagemaker-mammography-workshop** stack
+    
 ## 7 - Reference Links
 * AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
 * Python boto3: https://boto3.amazonaws.com/v1/documentation/api/latest/index.html?id=docs_gateway
