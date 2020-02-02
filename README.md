@@ -54,7 +54,7 @@ Before we can start the workshop, we need to have a SageMaker Jupyter Notebook d
 1. Once there, choose **Create Stack**.
 1. On "Step 1 - Create Stack", choose **Upload a template file**, then click on the **Choose file** button.
     1. Choose the template file you downloaded in Step 1. Click **Next**
-1. On "Step 2", type in the stack name: **SageMaker-Mammography-Workshop**. Click **Next**
+1. On "Step 2", type in the stack name: **mammography-workshop-set-up**. Click **Next**
 1. On "Step 3 - Configure stack options": Just click on **Next** button
 1. On "Step 4 - Review": Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
 

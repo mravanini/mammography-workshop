@@ -104,3 +104,7 @@ Outputs:
   CloudFrontOriginAccessIdentity:
     Description: CloudFront Origin Access Identity.
     Value: !Ref CloudFrontOriginAccessIdentity
+
+  OriginDomainName:
+    Description: Origin Domain Name.
+    Value: !GetAtt S3StaticWebsiteBucket.DomainName

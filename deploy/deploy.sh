@@ -34,13 +34,27 @@ create() {
   #Stacks[0].Outputs[2] = Region
   #Stacks[0].Outputs[3] = S3StaticWebsiteBucket
   #Stacks[0].Outputs[4] = PrivateBucket
+  #OriginDomainName
+
+
+
 
   cognito_id=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[0].OutputValue)
   origin_access_identity=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
   region=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[2].OutputValue)
   website_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[3].OutputValue)
   private_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[4].OutputValue)
+  origin_domain_name=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[5].OutputValue)
 
+
+  echo 'cognito_id' $cognito_id
+  echo 'region' $region
+  echo 'website_bucket' $website_bucket
+  echo 'private_bucket' $private_bucket
+  echo 'origin_access_identity' $origin_access_identity
+  echo 'origin_domain_name' $origin_domain_name
+
+: <<'END'
 
 	echo "Deploying CloudFront ..."
 
@@ -81,7 +95,7 @@ EOL
   #client_url=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
 #  echo "Website URL: " $client_url
 
-
+END
 }
 
 delete() {
