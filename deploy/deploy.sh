@@ -18,7 +18,7 @@ create() {
 
       echo $endpoint_not_ready
 
-      if [ $endpoint_not_ready == 'null' ]; then
+      if [ $endpoint_not_ready != 'null' ]; then
   			echo "Your endpoint is not In Service yet. Wait a few minutes and try again."
   			exit 1
 
