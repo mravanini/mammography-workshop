@@ -32,7 +32,6 @@ create() {
 
   #End of Remove after testing
 
-: <<'END'
 	stack_status_check="aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].StackStatus"
 	stack_status=$($stack_status_check)
 
@@ -85,7 +84,7 @@ EOL
   client_url=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
   echo "Website URL: " $client_url
 
-END
+
 }
 
 delete() {

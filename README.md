@@ -110,10 +110,13 @@ The client application architecture is depicted below:
     ```
     cd mammography-workshop/deploy
     ```
-3. Open a new tab in your browser and navigate to:
-    https://console.aws.amazon.com/sagemaker/home#/endpoints
+3. Paste the following command to get the latest mammography classification endpoint:
+    
+   ```
+    aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'InService' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName
+   ```
 
-4. Copy the last successful endpoint-name. It will look like this: 'image-classification-2020-01-13-09-58-43-599'
+4. Copy the endpoint-name. It will look something like this: 'mammography-classification-2020-01-13-09-58-43'
 
 5. Run the deploy script. Replace the <<endpoint_name>> below by the endpoint copied in step 4.
     ```
