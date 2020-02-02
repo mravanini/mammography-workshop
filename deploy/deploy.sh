@@ -14,24 +14,6 @@ create() {
   echo "Creating CloudFormation stack. This can take about 3 minutes..."
 	stack_id_front=$(aws cloudformation create-stack --stack-name mammography-workshop-client-front --template-body file://frontend_client_template.yml --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
 
-  #Remove after testing
-  output_0=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[0].OutputValue)
-  echo "output_0 : " $output_0
-
-  output_1=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
-  echo "output_1 : " $output_1
-
-  output_2=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[2].OutputValue)
-  echo "output_2 : " $output_2
-
-  output_3=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[3].OutputValue)
-  echo "output_3 : " $output_3
-
-  output_4=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[4].OutputValue)
-  echo "output_4 : " $output_4
-
-  #End of Remove after testing
-
 	stack_status_check="aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].StackStatus"
 	stack_status=$($stack_status_check)
 
@@ -46,6 +28,22 @@ create() {
 	done
 	echo "Stack created successfully!"
 
+  #Remove after testing
+  output_0=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[0].OutputValue)
+  echo "output_0 : " $output_0
+
+  output_1=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
+  echo "output_1 : " $output_1
+
+  output_2=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[2].OutputValue)
+  echo "output_2 : " $output_2
+
+  output_3=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[3].OutputValue)
+  echo "output_3 : " $output_3
+
+  #End of Remove after testing
+
+: <<'END'
 	echo "Uploading frontend..."
   region=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[2].OutputValue)
   private_bucket=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[4].OutputValue)
@@ -84,7 +82,7 @@ EOL
   client_url=$(aws cloudformation describe-stacks --stack-name $stack_id_front --output text --query Stacks[0].Outputs[1].OutputValue)
   echo "Website URL: " $client_url
 
-
+END
 }
 
 delete() {

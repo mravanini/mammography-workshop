@@ -27,41 +27,6 @@ Resources:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Ref S3StaticWebsiteBucket
 
-  # Configure CloudFront as PriceClass_100 to deploy faster
-
-  CloudFrontDistribution:
-    Type: 'AWS::CloudFront::Distribution'
-    Properties:
-      DistributionConfig:
-        DefaultCacheBehavior:
-          AllowedMethods:
-            - GET
-            - HEAD
-            - OPTIONS
-          CachedMethods:
-            - GET
-            - HEAD
-            - OPTIONS
-          Compress: false
-          DefaultTTL: 60 # in seconds
-          ForwardedValues:
-            Cookies:
-              Forward: none
-            QueryString: false
-          MaxTTL: 86400 # in seconds
-          MinTTL: 0 # in seconds
-          TargetOriginId: s3origin
-          ViewerProtocolPolicy: 'allow-all'
-        DefaultRootObject: 'index.html'
-        Enabled: true
-        HttpVersion: http2
-        Origins:
-          - DomainName: !GetAtt 'S3StaticWebsiteBucket.DomainName'
-            Id: s3origin
-            S3OriginConfig:
-              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
-        PriceClass: 'PriceClass_100'
-
   PrivateBucket:
     Type: "AWS::S3::Bucket"
     Properties:
@@ -131,10 +96,6 @@ Outputs:
   S3StaticWebsiteBucket:
     Description: Static website S3 bucket.
     Value: !Ref S3StaticWebsiteBucket
-
-  WebSiteURL:
-    Description: Mammography website URL.
-    Value: !GetAtt CloudFrontDistribution.DomainName
 
   CognitoIdentityPoolId:
     Description: Identity ID to access AWS resources.
