@@ -10,25 +10,7 @@ usage() {
 
 create() {
 
-  # Mandatory parameter validation
-  endpoint=$(aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'InService' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName)
-  echo $endpoint
-  if [ $endpoint == 'null' ]; then
-      endpoint_not_ready=$(aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'Creating' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName)
-
-      echo $endpoint_not_ready
-
-      if [ $endpoint_not_ready != 'null' ]; then
-  			echo "Your endpoint is not In Service yet. Wait a few minutes and try again."
-  			exit 1
-
-      fi
-
-			echo "Your model endpoint could not be found. Access https://console.aws.amazon.com/sagemaker/home?#/endpoints/ to make sure you have an endpoint called 'mammography-classification-<timestamp>' deployed."
-			exit 1
-
-  fi
-
+  validate_mandatory_parameters
 
   : <<'END'
   # Frontend resources
@@ -100,6 +82,25 @@ END
   # Outputs
 
   outputs
+
+}
+validate_mandatory_parameters(){
+
+  # Mandatory parameter validation
+  endpoint=$(aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'InService' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName)
+  if [ $endpoint == 'null' ]; then
+      endpoint_not_ready=$(aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'Creating' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName)
+
+      if [ $endpoint_not_ready != 'null' ]; then
+  			echo "Your endpoint is not In Service yet. Wait a few minutes and try again."
+  			exit 1
+
+      fi
+
+			echo "Your model endpoint could not be found. Access https://console.aws.amazon.com/sagemaker/home?#/endpoints/ to make sure you have an endpoint called 'mammography-classification-<timestamp>' deployed."
+			exit 1
+
+  fi
 
 }
 
