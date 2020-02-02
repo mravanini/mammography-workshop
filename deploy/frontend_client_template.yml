@@ -1,40 +1,71 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "SageMaker Workshop - CloudFormation Template"
+Description: "SageMaker Workshop - CloudFormation Template - Frontend"
 
 Resources:
-  PublicBucket:
-    Type: "AWS::S3::Bucket"
+  # Create the bucket to contain the website HTML
+  S3StaticWebsiteBucket:
+    Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: !Sub "sg-tko-workshop-public-${AWS::AccountId}"
-      PublicAccessBlockConfiguration:
-        BlockPublicAcls: false
-        BlockPublicPolicy: false
-        IgnorePublicAcls: false
-        RestrictPublicBuckets: false
-      WebsiteConfiguration:
-        IndexDocument: index.html
+      BucketName: !Sub "mammography-static-website-${AWS::AccountId}"
 
-  PublicBucketPolicy:
-    Type: AWS::S3::BucketPolicy
+  # Configure the bucket as a CloudFront Origin
+  ReadPolicy:
+    Type: 'AWS::S3::BucketPolicy'
     Properties:
-      Bucket: !Ref PublicBucket
+      Bucket: !Ref S3StaticWebsiteBucket
       PolicyDocument:
         Statement:
-          - Action:
-              - "s3:GetObject"
-            Effect: "Allow"
-            Resource:
-              Fn::Join:
-                - ""
-                - - "arn:aws:s3:::"
-                  - Ref: "PublicBucket"
-                  - "/*"
-            Principal: "*"
+          - Action: 's3:GetObject'
+            Effect: Allow
+            Resource: !Sub 'arn:aws:s3:::${S3StaticWebsiteBucket}/*'
+            Principal:
+              CanonicalUser: !GetAtt CloudFrontOriginAccessIdentity.S3CanonicalUserId
+
+  CloudFrontOriginAccessIdentity:
+    Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Ref S3StaticWebsiteBucket
+
+  # Configure CloudFront as PriceClass_100 to deploy faster
+
+  CloudFrontDistribution:
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          CachedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          Compress: false
+          DefaultTTL: 60 # in seconds
+          ForwardedValues:
+            Cookies:
+              Forward: none
+            QueryString: false
+          MaxTTL: 86400 # in seconds
+          MinTTL: 0 # in seconds
+          TargetOriginId: s3origin
+          ViewerProtocolPolicy: 'allow-all'
+        DefaultRootObject: 'index.html'
+        Enabled: true
+        HttpVersion: http2
+        Origins:
+          - DomainName: !GetAtt 'S3StaticWebsiteBucket.DomainName'
+            Id: s3origin
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
+        PriceClass: 'PriceClass_100'
 
   PrivateBucket:
     Type: "AWS::S3::Bucket"
     Properties:
-      BucketName: !Sub "sg-tko-workshop-private-${AWS::AccountId}"
+      BucketName: !Sub "mammography-website-private-content-${AWS::AccountId}"
       CorsConfiguration:
         CorsRules:
           - AllowedHeaders: ['*']
@@ -86,6 +117,8 @@ Resources:
       IdentityPoolId: !Ref CognitoIdentityPoolId
       Roles: { "unauthenticated": !GetAtt CognitoRole.Arn }
 
+
+
 Outputs:
   Region:
     Description: Region.
@@ -95,13 +128,13 @@ Outputs:
     Description: Private S3 bucket.
     Value: !Ref PrivateBucket
 
-  PublicBucket:
-    Description: Public S3 bucket.
-    Value: !Ref PublicBucket
+  S3StaticWebsiteBucket:
+    Description: Static website S3 bucket.
+    Value: !Ref S3StaticWebsiteBucket
 
-  PublicWebSite:
-    Description: Public website hosted on S3.
-    Value: !GetAtt PublicBucket.WebsiteURL
+  WebSiteURL:
+    Description: Mammography website URL.
+    Value: !GetAtt CloudFrontDistribution.DomainName
 
   CognitoIdentityPoolId:
     Description: Identity ID to access AWS resources.

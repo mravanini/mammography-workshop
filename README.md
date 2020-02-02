@@ -35,7 +35,7 @@ To get started, you will need an IAM user with permissions on the following serv
 *Pre-requirements:*
 - Service limit of 1 SageMaker ml.t2.large instance
 - Service limit of 1 SageMaker GPU instance type (ml.p2.xlarge, ml.p3.xlarge, etc)
-- Service limit to create 2 more buckets
+- Service limit to create 3 buckets
 
 *This lab has been tested in the following regions:*
 - N. Virginia (us-east-1)
@@ -91,9 +91,11 @@ If successful, you should see a message like this:
 ![How to open a notebook](images/open-notebook.png)
 
 
-5. Now follow the instructions described in the notebook.  
+5. Now, follow the instructions described in the notebook.  
 
 ## 4 - Front end
+
+After you've finished every step of Step 3 - Training, testing, and deploying the Mammography Classification model, it's time to see it in action.
 
 We will now deploy a front-end static application in order for us to test our model.
 
