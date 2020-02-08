@@ -101,7 +101,7 @@ We will now deploy a front-end static application in order for us to test our mo
 
 The client application architecture is depicted below:
 
-![demo](images/architecture.jpg)
+![demo](images/architecture.png)
 
 
 1. Go back to the Git terminal you opened previously. 
@@ -116,15 +116,15 @@ The client application architecture is depicted below:
     ```
 6. Copy the Client URL from the script output.
 It will look something like this: 
-```
-d12yz34h5w67br.cloudfront.net
-```
 
-This is an URL for the AWS content delivery network called Amazon CloudFront. **If you get an error accessing the page, wait a few more minutes and refresh your page.** It might take some time for CloudFront to propagate your site to it's edge locations. 
+d12yz34h5w67br.cloudfront.net
+
+
+This is an URL for the AWS content delivery network called Amazon CloudFront. **If you get an error accessing the page, wait a few more minutes and refresh your page.** It might take some time for CloudFront to propagate your site to its edge locations. 
 
 
 7. Open the URL in a browser, upload a mammography image and see the results!
-Download a sample mammography image here: 
+If you don't have one already, download a sample mammography image here: 
 
 * [CC-Right](https://mammography-workshop.s3.amazonaws.com/sample/resize_CCD_564.jpg?raw=true)
 * [CC-Left](https://mammography-workshop.s3.amazonaws.com/sample/resize_CCE_835.jpg?raw=true)
@@ -139,20 +139,24 @@ Let's navigate to the [Step Functions lab](workflow#ml-workflow).
 
 
 ## 6 - Clean Up
-* Deleting Client App
-    1. In the notebook Terminal, run deploy script with delete function
+1. Deleting Client App
+    1. In the notebook Terminal, run the deploy script, but now with **delete** parameter:
     ```
     cd deploy
     ./deploy.sh delete
     ```
     This might several minutes to finish, since it will delete CloudFront distribution. 
   
-* Deleting the SageMaker endpoint
+2. Deleting the SageMaker endpoint
     1. Go to the [SageMaker Endpoints console](https://console.aws.amazon.com/sagemaker/home#/endpoints). Delete the endpoint created during the lab.
 
-* Deleting SageMaker notebook
-    1. **Only execute this step when the clean-up of "Client App" above has finished.** 
-    2. First delete the contents of the output bucket
+3. Deleting SageMaker notebook
+    1. **Only execute this step when the clean-up of Step 1."Deleting Client App"  has finished.** 
+    2. First delete the contents of the output bucket. Copy the content below in the Jupyter notebook Terminal. Don't forget to replace <\<REGION>> and <\<ACCOUNT_ID>> before executing.
+    ```
+            aws s3 rm s3://mammography-workshop-files-<<REGION>>-<<ACCOUNT_ID>>/ --recursive --quiet
+
+    ```
     3. Then go to [CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks) and delete **sagemaker-mammography-workshop** stack
     
 ## 7 - Reference Links
