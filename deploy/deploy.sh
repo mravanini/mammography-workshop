@@ -112,6 +112,9 @@ outputs(){
   distribution=$(aws cloudfront list-distributions --query DistributionList.Items[*])
   printf "%s" "$distribution" > "distribution.json"
 
+  echo "."
+  echo "Copy below the URL for your website:"
+
   jq -r ' .[] | select( .Origins.Items[].DomainName | startswith("mammography-static-website")) | .DomainName' distribution.json
 }
 

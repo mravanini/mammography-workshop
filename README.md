@@ -86,12 +86,26 @@ If successful, you should see a message like this:
 >
 >Resolving deltas: 100% (109/109), done.
 
-4. In the File Browse on the left, navigate to the folder mammography-workshop/sagemaker. You should see something like the image below. Open the notebook with the name mammography-classification.ipynb:
+4. Now we will upload the mammography images from your local file into the S3 bucket your created in Module 1 of this workshop.
+Those files will be necessary for us to train, test, and validate our model.
+
+In order for us to do that, execute the following command. 
+
+**Don't forget to change the bucket name for the name of the bucket created previously**.
+
+``
+cd mammography-workshop/mammography-images
+
+aws s3 sync . s3://mammography-workshop-files-YY-YYYY-YY-XXXXXXXXXXXX
+
+`` 
+
+5. In the File Browse on the left, navigate to the folder mammography-workshop/sagemaker. You should see something like the image below. Open the notebook with the name mammography-classification.ipynb:
 
 ![How to open a notebook](images/open-notebook.png)
 
 
-5. Now, follow the instructions described in the notebook.  
+6. Now, follow the instructions described in the notebook.  
 
 ## 4 - Front end
 
@@ -108,14 +122,15 @@ The client application architecture is depicted below:
 
 2. Now navigate to the **deploy** folder:
     ```
-    cd mammography-workshop/deploy
+    cd ../deploy
     ```
 3. Run the deploy script. 
     ```
     ./deploy.sh create 
     ```
-6. Copy the Client URL from the script output.
+4. Copy the Client URL from the script output.
 It will look something like this: 
+
 
 d12yz34h5w67br.cloudfront.net
 
@@ -123,14 +138,14 @@ d12yz34h5w67br.cloudfront.net
 This is an URL for the AWS content delivery network called Amazon CloudFront. **If you get an error accessing the page, wait a few more minutes and refresh your page.** It might take some time for CloudFront to propagate your site to its edge locations. 
 
 
-7. Open the URL in a browser, upload a mammography image and see the results!
+5. Open the URL in a browser, upload a mammography image and see the results!
 If you don't have one already, download a sample mammography image here: 
 
-* [CC-Right](https://mammography-workshop.s3.amazonaws.com/sample/resize_CCD_564.jpg?raw=true)
-* [CC-Left](https://mammography-workshop.s3.amazonaws.com/sample/resize_CCE_835.jpg?raw=true)
-* [MLO-Right](https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOD_682.jpg?raw=true)
-* [MLO-Left](https://mammography-workshop.s3.amazonaws.com/sample/resize_MLOE_743.jpg?raw=true)
-* [Not a mammography](https://mammography-workshop.s3.amazonaws.com/sample/resize_NAO_MG_1.3.51.0.7.11929756167.13783.28228.48520.63660.34753.63542.dcm.jpg?raw=true)
+* [CC-Right](https://mammography-workshop.s3.amazonaws.com/sample/RIGHT_CC.jpg?raw=true)
+* [CC-Left](https://mammography-workshop.s3.amazonaws.com/sample/LEFT_CC.jpg?raw=true)
+* [MLO-Right](https://mammography-workshop.s3.amazonaws.com/sample/RIGHT_MLO.jpg?raw=true)
+* [MLO-Left](https://mammography-workshop.s3.amazonaws.com/sample/LEFT_MLO.jpg?raw=true)
+* [Not a mammography](https://mammography-workshop.s3.amazonaws.com/sample/not-a-mammography.png?raw=true)
 
 
 ## 5 - Step Functions

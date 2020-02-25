@@ -22,7 +22,7 @@ def lambda_handler(event, context):
         s3_object_imdecode = cv2.imdecode(np_array, cv2.IMREAD_UNCHANGED)
 
         resized_image = cv2.resize(
-            s3_object_imdecode, (200, 300), interpolation=cv2.INTER_AREA)
+            s3_object_imdecode, (150, 300), interpolation=cv2.INTER_AREA)
 
         # saving image to tmp (writable) directory
         tmp_file_name = key.replace("raw/", "resized_")
