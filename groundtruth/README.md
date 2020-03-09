@@ -14,40 +14,6 @@ A workforce is the group of workers that you have selected to label your dataset
 
 When you use a private workforce, you also create work teams, a group of workers from your workforce that are assigned to specific jobs— Amazon SageMaker Ground Truth labeling jobs or Amazon Augmented AI human review tasks. You can have multiple work teams and can assign one or more work teams to each job.
 
-## Our classification challenge
-
-Mammography (also called mastography) is the process of using low-energy X-rays to examine the human breast for diagnosis and screening. The goal of mammography is the early detection of breast cancer, typically through detection of characteristic masses or microcalcifications.
-
-![Image](./images/mammography.jpg)
-
-There are 2 most common views for a mammography exam:
-
-- craniocaudal view (aka CC view)
-- mediolateral oblique view (aka MLO view)
-
-The CC view is the exam taken when the machine scans the breast *horizontally*.
-The MLO view is the exam taken when the machine scans the breast *vertically*.
-
-Each view contains one picture for the left breast and one for the right breast.
-So, for a common exam, we have at least four pictures:
-
-- Left-CC
-- Right-CC
-- Left-MLO
-- Right-MLO
-
-#### How to set a CC and MLO apart?
-In an MLO, it is usually possible to identify armpit muscle; sometimes event part of the belly of the patient. As you can see in the example below:
-
-
-![Image](./images/cc_mlo_views-annotated.jpeg)
-
-**Note from the author:** *Please note that some words in this module **are not** medical terms. They are being used here for the purpose of elucidation.*
-
-Around 20% of exam images are misdiagnosed. The percentage varies by country and cause, and reflections of that might be damaging to the patient's health. 
-<br>
-Our challenge here is to prevent misclassification of images, that could cause the system to spend more money on retaking those exams or possibly leading to a misdiagnosis.
-
 ## Step 1: Creating a private workforce
 
 The first step is to define who is going to classify our images.
@@ -197,13 +163,14 @@ The output folder was set to **s3://mammography-workshop-files-<\<region>>-<\<ac
 ```json
 {"source-ref":"s3://mammography-workshop-files-<<region>>-<<account-id>>/resize_00006585_009.png","mammography-views":4,"mammography-views-metadata":{"confidence":0.9,"job-name":"labeling-job/mammography-views","class-name":"Not a mammography","human-annotated":"yes","creation-date":"2020-02-01T14:47:00.585263","type":"groundtruth/image-classification"}}
 
-{"source-ref":"s3://mammography-workshop-files-<<region>>-<<account-id>>/resize_A_0290_1.LEFT_CC.LJPEG.1_highpass.jpg","mammography-views":0,"mammography-views-metadata":{"confidence":0.75,"job-name":"labeling-job/mammography-views","class-name":"Right-CC","human-annotated":"yes","creation-date":"2020-02-01T14:48:04.189444","type":"groundtruth/image-classification"}}
+{"source-ref":"s3://mammography-workshop-files-<<region>>-<<account-id>>/resize_RIGHT_CC_A_0290_1.jpg","mammography-views":0,"mammography-views-metadata":{"confidence":0.75,"job-name":"labeling-job/mammography-views","class-name":"Right-CC","human-annotated":"yes","creation-date":"2020-02-01T14:48:04.189444","type":"groundtruth/image-classification"}}
 
-{"source-ref":"s3://mammography-workshop-files-<<region>>-<<account-id>>/resize_A_0296_1.RIGHT_CC.LJPEG.1_highpass.jpg","mammography-views":1,"mammography-views-metadata":{"confidence":0.75,"job-name":"labeling-job/mammography-views","class-name":"Left-CC","human-annotated":"yes","creation-date":"2020-02-01T14:48:04.189469","type":"groundtruth/image-classification"}}
+{"source-ref":"s3://mammography-workshop-files-<<region>>-<<account-id>>/resize_LEFT_CC_A_0296_1.jpg","mammography-views":1,"mammography-views-metadata":{"confidence":0.75,"job-name":"labeling-job/mammography-views","class-name":"Left-CC","human-annotated":"yes","creation-date":"2020-02-01T14:48:04.189469","type":"groundtruth/image-classification"}}
 
-{"source-ref":"s3://mammography-workshop-files-<<region>>-<<account-id>>/resize_A_0431_1.RIGHT_MLO.LJPEG.1_highpass.jpg","mammography-views":3,"mammography-views-metadata":{"confidence":0.9,"job-name":"labeling-job/mammography-views","class-name":"Left-MLO","human-annotated":"yes","creation-date":"2020-02-01T14:45:57.449584","type":"groundtruth/image-classification"}}
+{"source-ref":"s3://mammography-workshop-files-<<region>>-<<account-id>>/resize_RIGHT_MLO_D_4501_1.jpg","mammography-views":2,"mammography-views-metadata":{"confidence":0.9,"job-name":"labeling-job/mammography-views","class-name":"Right-MLO","human-annotated":"yes","creation-date":"2020-02-01T14:45:57.449584","type":"groundtruth/image-classification"}}
 
-{"source-ref":"s3://mammography-workshop-files-<<region>>-<<account-id>>/resize_D_4501_1.LEFT_MLO.LJPEG.1_highpass.jpg","mammography-views":2,"mammography-views-metadata":{"confidence":0.75,"job-name":"labeling-job/mammography-views","class-name":"Right-MLO","human-annotated":"yes","creation-date":"2020-02-01T14:48:04.189483","type":"groundtruth/image-classification"}}
+{"source-ref":"s3://mammography-workshop-files-<<region>>-<<account-id>>/resize_LEFT_MLO_A_0431_1.jpg","mammography-views":3,"mammography-views-metadata":{"confidence":0.75,"job-name":"labeling-job/mammography-views","class-name":"Left-MLO","human-annotated":"yes","creation-date":"2020-02-01T14:48:04.189483","type":"groundtruth/image-classification"}}
+
 
 ```
 

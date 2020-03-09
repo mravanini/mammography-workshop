@@ -1,4 +1,41 @@
-# Amazon SageMaker Mammography Workshop
+# Amazon SageMaker Mammography Classification Workshop
+
+## Our classification challenge
+
+Mammography (also called mastography) is the process of using low-energy X-rays to examine the human breast for diagnosis and screening. The goal of mammography is the early detection of breast cancer, typically through detection of characteristic masses or microcalcifications.
+
+![Image](./images/mammography.jpg)
+
+There are 2 most common views for a mammography exam:
+
+- craniocaudal view (aka CC view)
+- mediolateral oblique view (aka MLO view)
+
+The CC view is the exam taken when the machine scans the breast *horizontally*.
+The MLO view is the exam taken when the machine scans the breast *vertically*.
+
+Each view contains one picture for the left breast and one for the right breast.
+So, for a common exam, we have at least four pictures:
+
+- Left-CC
+- Right-CC
+- Left-MLO
+- Right-MLO
+
+#### How to set a CC and MLO apart?
+In an MLO, it is usually possible to identify armpit muscle; sometimes even part of the belly of the patient. As you can see in the example below:
+
+
+![Image](./images/cc_mlo_views-annotated.jpeg)
+
+**Note from the author:** *Please note that some words in this module **are not** medical terms. They are being used here for the purpose of elucidation.*
+
+Around 20% of exam images are misdiagnosed. The percentage varies by country and cause, and reflections of that might be damaging to the patient's health. 
+<br>
+Our challenge for this workshop is to prevent misclassification of images, that could cause the system to spend more money on retaking those exams or possibly leading to a misdiagnosis.
+
+##So, let's begin!
+
 
 [1 - Creating the SageMaker Jupyter Notebook](#1---creating-the-sagemaker-jupyter-notebook)
 
@@ -17,7 +54,7 @@
 
 Today we will learn how to classify mammography images into 5 different categories using Amazon SageMaker, Amazon GroundTruth, AWS StepFunctions, AWS Lambda, and much more!
 
-You will need to use your an AWS account for this workshop, and all information will be provided through this documentation.
+You will need to use an AWS account for this workshop, and all information will be provided through this documentation.
 
 **Let's begin!**
 
@@ -30,12 +67,12 @@ To get started, you will need an IAM user with permissions on the following serv
 - Lambda
 - SageMaker
 - StepFunctions
-- Lambda
 
 *Pre-requirements:*
-- Service limit of 1 SageMaker ml.t2.large instance
-- Service limit of 1 SageMaker GPU instance type (ml.p2.xlarge, ml.p3.xlarge, etc)
-- Service limit to create 3 buckets
+- Service limit of 1 SageMaker ml.t2.large instance for a Jupyter Notebook
+- Service limit of 1 SageMaker GPU instance type (ml.p2.xlarge, ml.p3.xlarge, etc) for training the model
+- Service limit to create 3 Amazon S3buckets
+- Service limit to create 1 Amazon VPC
 
 *This lab has been tested in the following regions:*
 - N. Virginia (us-east-1)
@@ -46,7 +83,8 @@ To get started, you will need an IAM user with permissions on the following serv
 ## 1 - Creating the SageMaker Jupyter Notebook
 
 Before we can start the workshop, we need to have a SageMaker Jupyter Notebook deployed in your account. The CloudFormation below will also create a bucket for the files needed for this workshop.
-And, finally, it will create a file inside that S3 bucket that contains a zip of OpenCV lib to be used in *Step 4 - Front End* of this workshop.
+<br/>
+And, finally, it will create a file inside that S3 bucket that contains a zip of OpenCV lib to be used in *Module 4 - Front End* of this workshop.
 
 **CloudFormation**
 1. [Click here](sagemaker_template.yml?raw=true) to download the **sagemaker_template.yml** template file you are going to use to deploy the basic infrastructure for this workshop.
@@ -55,10 +93,11 @@ And, finally, it will create a file inside that S3 bucket that contains a zip of
 1. Once there, choose **Create Stack**.
 1. On "Step 1 - Create Stack", choose **Upload a template file**, then click on the **Choose file** button.
     1. Choose the template file you downloaded in Step 1. Click **Next**
-1. On "Step 2", type in the stack name: **mammography-workshop-set-up**. <br/>
-    Make sure you have VPC CIDR IP range available to create a new VPC in this region. Click [here](https://console.aws.amazon.com/vpc/home#vpcs) to see your VPCs.<br/>
-     
-Click **Next**
+1. On "Step 2", type in the stack name: **mammography-workshop-set-up** <br/>
+    The VPC CIDR IP range is filled with a default value.
+    Make sure that that VPC CIDR IP range is available. Click [here](https://console.aws.amazon.com/vpc/home#vpcs) to see your VPCs.<br/>
+    If it is not available, the the CIDR accordingly.
+    Click **Next**
 1. On "Step 3 - Configure stack options": Just click on **Next** button
 1. On "Step 4 - Review": Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
 
@@ -86,9 +125,7 @@ In order for us to do that, we will need to open the Jupyter Notebook created in
     ```
 If successful, you should see a message like this:
 
->Receiving objects: 100% (359/359), 61.28 MiB | 26.27 MiB/s, done.
->
->Resolving deltas: 100% (109/109), done.
+![Git Clone Successful](images/git-clone-successful.png)
 
 4. Now we will upload the mammography images from your local file into the S3 bucket your created in Module 1 of this workshop.
 Those files will be necessary for us to train, test, and validate our model.
@@ -98,6 +135,7 @@ In order for us to do that, execute the following command.
 **Don't forget to change the bucket name for the name of the bucket created previously**.
 
 ``
+
 cd mammography-workshop/mammography-images
 
 aws s3 sync . s3://mammography-workshop-files-YY-YYYY-YY-XXXXXXXXXXXX
@@ -113,7 +151,7 @@ aws s3 sync . s3://mammography-workshop-files-YY-YYYY-YY-XXXXXXXXXXXX
 
 ## 4 - Front end
 
-After you've finished every step of Step 3 - Training, testing, and deploying the Mammography Classification model, it's time to see it in action.
+After you've finished every step of Module *3 - Training, testing, and deploying the Mammography Classification model*, it's time to see it in action.
 
 We will now deploy a front-end static application in order for us to test our model.
 
@@ -126,7 +164,7 @@ The client application architecture is depicted below:
 
 2. Now navigate to the **deploy** folder:
     ```
-    cd ../deploy
+    cd ~/SageMaker/mammography-workshop/deploy/
     ```
 3. Run the deploy script. 
     ```
@@ -158,30 +196,31 @@ Let's navigate to the [Step Functions lab](workflow#ml-workflow).
 
 
 ## 6 - Clean Up
-1. Deleting Client App
-    1. In the notebook Terminal, run the deploy script, but now with **delete** parameter:
+### Attention!
+This will delete everything created during this workshop, which includes:
+* The front-end
+* The back-end
+* All Amazon S3 buckets
+* The inference endpoint
+* The Jupyter Notebook 
+* etc.
+
+1. In the notebook Terminal, run the deploy script, but now with **delete** parameter:
     ```
-    cd deploy
+    cd ~/SageMaker/mammography-workshop/deploy/
     ./deploy.sh delete
     ```
     This might several minutes to finish, since it will delete CloudFront distribution. 
   
-2. Deleting the SageMaker endpoint
-    1. Go to the [SageMaker Endpoints console](https://console.aws.amazon.com/sagemaker/home#/endpoints). Delete the endpoint created during the lab.
-
-3. Deleting SageMaker notebook
-    1. **Only execute this step when the clean-up of Step 1."Deleting Client App"  has finished.** 
-    2. First delete the contents of the output bucket. Copy the content below in the Jupyter notebook Terminal. Don't forget to replace <\<REGION>> and <\<ACCOUNT_ID>> before executing.
-    ```
-            aws s3 rm s3://mammography-workshop-files-<<REGION>>-<<ACCOUNT_ID>>/ --recursive --quiet
-
-    ```
-    3. Then go to [CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks) and delete **sagemaker-mammography-workshop** stack
     
 ## 7 - Reference Links
 * AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
 * Python boto3: https://boto3.amazonaws.com/v1/documentation/api/latest/index.html?id=docs_gateway
 * SageMaker: https://docs.aws.amazon.com/sagemaker/latest/dg/gs.html
+
+* We would like to credit the ![DDSM project](http://www.eng.usf.edu/cvprg/Mammography/Database.html) as the source of the mammography images, and reference:
+- The Digital Database for Screening Mammography, Michael Heath, Kevin Bowyer, Daniel Kopans, Richard Moore and W. Philip Kegelmeyer, in Proceedings of the Fifth International Workshop on Digital Mammography, M.J. Yaffe, ed., 212-218, Medical Physics Publishing, 2001. ISBN 1-930524-00-5.
+- Current status of the Digital Database for Screening Mammography, Michael Heath, Kevin Bowyer, Daniel Kopans, W. Philip Kegelmeyer, Richard Moore, Kyong Chang, and S. MunishKumaran, in Digital Mammography, 457-460, Kluwer Academic Publishers, 1998; Proceedings of the Fourth International Workshop on Digital Mammography.
 
 ## License Summary
 This sample code is made available under the MIT-0 license. See the LICENSE file.
