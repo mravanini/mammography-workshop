@@ -66,7 +66,7 @@ Resources:
         - python3.7
       Content:
         S3Bucket: !Ref PrivateBucket
-        S3Key: layer/opencv-python37
+        S3Key: opencv-layer/opencv-python37-layer.zip
       Description: opencv-python37
       LayerName: opencv-python37
 

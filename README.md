@@ -46,6 +46,7 @@ To get started, you will need an IAM user with permissions on the following serv
 ## 1 - Creating the SageMaker Jupyter Notebook
 
 Before we can start the workshop, we need to have a SageMaker Jupyter Notebook deployed in your account. The CloudFormation below will also create a bucket for the files needed for this workshop.
+And, finally, it will create a file inside that S3 bucket that contains a zip of OpenCV lib to be used in *Step 4 - Front End* of this workshop.
 
 **CloudFormation**
 1. [Click here](sagemaker_template.yml?raw=true) to download the **sagemaker_template.yml** template file you are going to use to deploy the basic infrastructure for this workshop.
@@ -54,7 +55,10 @@ Before we can start the workshop, we need to have a SageMaker Jupyter Notebook d
 1. Once there, choose **Create Stack**.
 1. On "Step 1 - Create Stack", choose **Upload a template file**, then click on the **Choose file** button.
     1. Choose the template file you downloaded in Step 1. Click **Next**
-1. On "Step 2", type in the stack name: **mammography-workshop-set-up**. Click **Next**
+1. On "Step 2", type in the stack name: **mammography-workshop-set-up**. <br/>
+    Make sure you have VPC CIDR IP range available to create a new VPC in this region. Click [here](https://console.aws.amazon.com/vpc/home#vpcs) to see your VPCs.<br/>
+     
+Click **Next**
 1. On "Step 3 - Configure stack options": Just click on **Next** button
 1. On "Step 4 - Review": Enable the checkbox **I acknowledge that AWS CloudFormation might create IAM resources with custom names.**, and click on **Create Stack** button
 

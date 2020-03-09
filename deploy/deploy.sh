@@ -3,6 +3,8 @@
 cloudfront_stack_name='mammography-workshop-cloudfront'
 front_stack_name='mammography-workshop-client-front'
 back_stack_name='mammography-workshop-client-back'
+set_up_stack_name='mammography-workshop-set-up'
+#set_up_stack_name is defined in the README.md root file, in 1 - Creating the SageMaker Jupyter Notebook
 
 usage() {
     echo "usage: $0 <command>"
@@ -119,7 +121,7 @@ outputs(){
 }
 
 delete() {
-    echo "Deleting resources..."
+    echo "Deleting all the resources created for this workshop..."
 
 
     website_bucket=$(aws cloudformation describe-stacks --stack-name $front_stack_name --output text --query Stacks[0].Outputs[?OutputKey==\`S3StaticWebsiteBucket\`].OutputValue)
@@ -140,7 +142,20 @@ delete() {
     aws cloudformation wait stack-delete-complete --stack-name $front_stack_name
     echo 'Front stack deleted.'
 
-    echo 'Finished.'
+
+    echo 'Deleting the SageMaker endpoint, and the mammography-workshop-set-up cloudformation stack...'
+    echo 'Attention: this will delete this notebook. Prepare for shut down.'
+    # Deleting the sagemaker_template.yml ($set_up_stack_name)
+    # This will even delete this notebook
+    endpoint=$(aws sagemaker list-endpoints --sort-by 'CreationTime' --sort-order 'Descending' --status-equals 'InService' --name-contains 'mammography-classification-' --query Endpoints[0].EndpointName)
+
+    if [ $endpoint != 'null' ]; then
+      aws sagemaker delete-endpoint --endpoint-name $endpoint
+    fi
+
+
+    aws cloudformation delete-stack --stack-name $set_up_stack_name
+    echo 'Shutting down.'
 
 }
 
