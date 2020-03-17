@@ -3,7 +3,7 @@ import csv
 
 s3 = boto3.resource('s3')
 
-bucket_name='mammography-workshop-files-us-east-2-582783967438'
+bucket_name='<<replace with bucket name>>'
 
 my_images_bucket = s3.Bucket(bucket_name)
 
