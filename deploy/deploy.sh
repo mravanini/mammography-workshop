@@ -68,7 +68,10 @@ EOL
   zip -j ../client-app/lambda/code/lambda_resize_image.zip ../client-app/lambda/code/lambda_resize_image.py --quiet
   aws s3 cp ../client-app/lambda/ s3://$private_bucket --recursive --quiet
 
-  stack_id_back=$(aws cloudformation create-stack --stack-name $back_stack_name --template-body file://backend_client_template.yml --parameters ParameterKey=Endpoint,ParameterValue=$endpoint ParameterKey=PrivateBucket,ParameterValue=$private_bucket --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
+  set_up_bucket=$(aws cloudformation describe-stacks --stack-name $set_up_stack_name --output text --query Stacks[0].Outputs[?OutputKey==\`MammographyBucket\`].OutputValue)
+
+
+  stack_id_back=$(aws cloudformation create-stack --stack-name $back_stack_name --template-body file://backend_client_template.yml --parameters ParameterKey=Endpoint,ParameterValue=$endpoint ParameterKey=PrivateBucket,ParameterValue=$private_bucket ParameterKey=SetUpBucket,ParameterValue=$set_up_bucket  --capabilities CAPABILITY_NAMED_IAM --output text --query StackId)
   stack_status_check="aws cloudformation describe-stacks --stack-name $stack_id_back --output text --query Stacks[0].StackStatus"
 	stack_status=$($stack_status_check)
   while [ $stack_status != "CREATE_COMPLETE" ]; do
@@ -126,8 +129,11 @@ delete() {
 
     website_bucket=$(aws cloudformation describe-stacks --stack-name $front_stack_name --output text --query Stacks[0].Outputs[?OutputKey==\`S3StaticWebsiteBucket\`].OutputValue)
     private_bucket=$(aws cloudformation describe-stacks --stack-name $front_stack_name --output text --query Stacks[0].Outputs[?OutputKey==\`PrivateBucket\`].OutputValue)
+    set_up_bucket=$(aws cloudformation describe-stacks --stack-name $set_up_stack_name --output text --query Stacks[0].Outputs[?OutputKey==\`MammographyBucket\`].OutputValue)
+
     aws s3 rm s3://$website_bucket/ --recursive --quiet
     aws s3 rm s3://$private_bucket/ --recursive --quiet
+    aws s3 rm s3://$set_up_bucket/ --recursive --quiet
 
     aws cloudformation delete-stack --stack-name $back_stack_name
     aws cloudformation wait stack-delete-complete --stack-name $back_stack_name

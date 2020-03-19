@@ -8,13 +8,12 @@ def lambda_handler(event, context):
     print('starting...') 
     
     s3 = boto3.resource('s3')
-    
-    #bucket containing the immages
-    images_bucket='<<images_bucket_name>>'
-    
-    #bucket to write the lst files 
-    output_bucket='<<output_bucket_name>>'
-    
+
+    #retrieve bucket name containing the images
+    for bucket in s3.buckets.all():
+        if bucket.name.startswith("mammography-workshop-files-"):
+            images_bucket = bucket.name
+
     prefix = 'resize'
     train_folder = 'train'
     test_folder = 'test'    
@@ -22,7 +21,7 @@ def lambda_handler(event, context):
     test_file_name = 'test-data.lst'
     
     s3train = '{}/{}/'.format(prefix, train_folder)
-    s3validation = '{}/{}/'.format(prefix, test_folder)
+    s3test = '{}/{}/'.format(prefix, test_folder)
     
     s3train_lst = '{}/{}'.format(prefix, train_file_name)
     s3test_lst = '{}/{}'.format(prefix, test_file_name)
@@ -47,19 +46,19 @@ def lambda_handler(event, context):
     with open('/tmp/test-data.lst', 'w', newline='') as file:
         writer = csv.writer(file, delimiter = '\t')
         cont = 0
-        for object_summary in my_images_bucket.objects.filter(Prefix=s3validation):
+        for object_summary in my_images_bucket.objects.filter(Prefix=s3test):
             s = object_summary.key
             if s.endswith("jpg") or s.endswith("jpeg") or s.endswith("bmp"):
                 cont += 1
-                ss = s[len(s3validation)::]
+                ss = s[len(s3test)::]
                 k = str(ss.split('/')[0])
                 writer.writerow([cont, CLASSES.get(k), ss])
     
     print('writing file {} to S3'.format(s3train_lst))         
-    s3.meta.client.upload_file('/tmp/train-data.lst', output_bucket, s3train_lst)
+    s3.meta.client.upload_file('/tmp/train-data.lst', images_bucket, s3train_lst)
     
     print('writing file {} to S3'.format(s3test_lst)) 
-    s3.meta.client.upload_file('/tmp/test-data.lst', output_bucket, s3test_lst)
+    s3.meta.client.upload_file('/tmp/test-data.lst', images_bucket, s3test_lst)
     
     print('done!')
     

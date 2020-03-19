@@ -20,6 +20,10 @@ Parameters:
   PrivateBucket:
     Type: String
     Description: "Bucket with lambda code."
+  SetUpBucket:
+    Type: String
+    Description: "Bucket with OpenCV layer."
+  
 
 Resources:
   LambdaGodRole:
@@ -65,7 +69,7 @@ Resources:
       CompatibleRuntimes:
         - python3.7
       Content:
-        S3Bucket: !Ref PrivateBucket
+        S3Bucket: !Ref SetUpBucket
         S3Key: opencv-layer/opencv-python37-layer.zip
       Description: opencv-python37
       LayerName: opencv-python37

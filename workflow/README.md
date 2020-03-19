@@ -1,23 +1,20 @@
 # ML Workflow
 
-## The workflow problem
-
-Once you have finished coding your ML code, it might be necessary to retrain the model from time to time, as new data becomes available. So, we will create an automated workflow for this task.
 
 ## SageMaker Workflows
 
 Now we will create an ML Workflow to retrain the model.
 
 SageMaker has integration with some orchestration tools such as AWS Step Functions and Apache Airflow.
-In this workshop, we will use Step Functions to prepare, train, and deploy our machine learning model.
+In this workshop, we will use Step Functions to prepare, train, and save our machine learning model.
 
 The workflow steps will look like the figure below:
 
 ![Image](./images/Figure_1.png)
 
-- Generate Dataset: Invokes a lambda function responsible for reading the folder and file structure in S3 and generating a LST file containing some metadata.
-- Train Model: Creates and runs a training job in SageMaker.
-- Save Model: Saves the model for later use.
+- **Generate Dataset**: Invokes a lambda function responsible for reading the folder and file structure in S3 and generating a LST file containing the necessary metadata.
+- **Train Model**: Creates and runs a training job in SageMaker.
+- **Save Model**: Saves the model for later use. The model should be tested before putting into production, so this automation template will not deploy the model in production. You can adjust this according to your rules. 
 
 ## Dataprep using Amazon Lambda
 
@@ -47,14 +44,7 @@ Before we can create our workflow, we need to create the Lambda function respons
 
 **Step 6:** The last step to finalize our function is to modify the source code. Download the source code [here](code/generate_lst_lambda_template.py?raw=True) and paste it into the "Function Code" field.
 
-**Step 7:** Now follow the instructions in the source code and modify the name of the buckets according to the list below. 
-
-- N. Virginia (us-east-1): replace by "mammography-workshop"
-- Ohio (us-east-2): replace by "mammography-workshop-ohio"
-- Oregon (us-west-2): replace by "mammography-workshop-oregon"
-- Ireland (eu-west-1): replace by "mammography-workshop-ireland"
-
-Then save and test the function. Check the function output logs. If successful, you will see the following message:
+**Step 7:** Then save and test the function. Check the function output logs. If successful, you will see the following message:
 
 ![Image](./images/Figure_8.png)
 
@@ -62,7 +52,7 @@ Then save and test the function. Check the function output logs. If successful, 
 
 Now that you have your Lambda function ready, you can create your Workflow.
 
-**Step 8:** Go to the step functions console and create a new State Machine by clicking on "State Machines" / "Create state machine".
+**Step 8:** Go to the [Step Functions console](https://console.aws.amazon.com/states/home) and create a new State Machine by clicking on "State Machines" / "Create state machine" on the menu on the left.
 
 **Step 9:** Download/Open the workflow definition file [here](code/model_workflow_template.json?raw=True) and paste the contents into the "Definition" field.
 
@@ -81,27 +71,25 @@ Now that you have your Lambda function ready, you can create your Workflow.
     - Ohio (us-east-2): replace by "825641698319.dkr.ecr.us-east-2.amazonaws.com/image-classification:latest"
     - Oregon (us-west-2): replace by "433757028032.dkr.ecr.us-west-2.amazonaws.com/image-classification:latest"
     - Ireland (eu-west-1): replace by "685385470294.dkr.ecr.eu-west-1.amazonaws.com/image-classification:latest"
-- "S3OutputPath": "s3://<<your_output_bucket>>/models"
+- "S3OutputPath": "s3://<<mammography-workshop-files-YY-YYYY-YY-XXXXXXXXXXXX>>/models"
 
-    The name of the bucket created for the output files by the first CloudFormation of this lab.
+    The name of the bucket created by the first CloudFormation of this lab. It should start with **s3://mammography-workshop-files-**
+    
 - "RoleArn": "<<arn_of_your_sagemaker_execution_role>>"
 
     Navigate to your [notebook instances](https://console.aws.amazon.com/sagemaker/home#/notebook-instances)
-    There, click on the instance created for this lab. In the **Permissions and encryption** field, you will see **IAM role ARN**. Copy that value and paste here. You will need this information below again. 
-- "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/train/"
-
-    This should be, depending on your region:
-        - N. Virginia (us-east-1): replace by "mammography-workshop"
-        - Ohio (us-east-2): replace by "mammography-workshop-ohio"
-        - Oregon (us-west-2): replace by "mammography-workshop-oregon"
-        - Ireland (eu-west-1): replace by "mammography-workshop-ireland"
-- "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/test/"
+    There, click on the instance created for this lab. In the **Permissions and encryption** field, you will see **IAM role ARN**. Copy that value and paste here. You will need this information below again.
+     
+- "S3Uri": "s3://<<mammography-workshop-files-YY-YYYY-YY-XXXXXXXXXXXX>>/resize/train/"
 
     Same as above.
-- "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/train-data.lst"
+- "S3Uri": "s3://<<mammography-workshop-files-YY-YYYY-YY-XXXXXXXXXXXX>>/resize/test/"
 
     Same as above.
-- "S3Uri": "s3://<<name_of_the_bucket_with_the_input_images>>/resize/test-data.lst"
+- "S3Uri": "s3://<<mammography-workshop-files-YY-YYYY-YY-XXXXXXXXXXXX>>/resize/train-data.lst"
+
+    Same as above.
+- "S3Uri": "s3://<<mammography-workshop-files-YY-YYYY-YY-XXXXXXXXXXXX>>/resize/test-data.lst"
 
     Same as above.
 - "Image": "<<training_image_URL>>" 

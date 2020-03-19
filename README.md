@@ -192,7 +192,9 @@ If you don't have one already, download a sample mammography image here:
 
 ## 5 - Step Functions
 
-Let's navigate to the [Step Functions lab](workflow#ml-workflow).
+Once you have finished deploying your ML model, it might be necessary to retrain the model from time to time, as new data becomes available. So, we will create an automated workflow for this task.
+
+Let's navigate to the [Step Functions lab](workflow#ml-workflow) to learn how to do that using Step Functions and Lambda.
 
 
 ## 6 - Clean Up
