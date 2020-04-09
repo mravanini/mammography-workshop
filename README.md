@@ -34,7 +34,7 @@ Around 20% of exam images are misdiagnosed. The percentage varies by country and
 <br>
 Our challenge for this workshop is to prevent misclassification of images, that could cause the system to spend more money on retaking those exams or possibly leading to a misdiagnosis.
 
-##So, let's begin!
+## So, let's begin!
 
 
 [1 - Creating the SageMaker Jupyter Notebook](#1---creating-the-sagemaker-jupyter-notebook)
