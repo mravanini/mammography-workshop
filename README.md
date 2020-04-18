@@ -134,13 +134,13 @@ In order for us to do that, execute the following command.
 
 **Don't forget to change the bucket name for the name of the bucket created previously**.
 
-``
 
+
+```
 cd mammography-workshop/mammography-images
 
 aws s3 sync . s3://mammography-workshop-files-YY-YYYY-YY-XXXXXXXXXXXX
-
-`` 
+``` 
 
 5. In the File Browse on the left, navigate to the folder mammography-workshop/sagemaker. You should see something like the image below. Open the notebook with the name mammography-classification.ipynb:
 
